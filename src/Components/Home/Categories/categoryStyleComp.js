@@ -1,21 +1,26 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 
-export default function CategoryStyleComp() {
+export default function CategoryStyleComp(props) {
   return (
     <>
-      <div className=" mx-1" style={{ width: "13%" }}>
-        <Card>
+      {/* <div className=" mx-1" style={{ width: "13%" }}> */}
+      <div className=" mx-1">
+        <div>
+          <img src={props.imgurl} alt="" className="img-fluid" />
+        </div>
+        {/* <Card>
           <Card.Img
             variant="top"
-            src="https://fakeimg.pl/250x100/"
-            style={{ height: 400 }}
+            src={props.imgurl}
+            // style={{ height: 400 }}
           />
           <Card.Body>
             <Card.Title>Sub Category</Card.Title>
           </Card.Body>
-        </Card>
+        </Card> */}
       </div>
+      {/* </div> */}
     </>
   );
 }
