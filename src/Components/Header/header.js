@@ -24,7 +24,7 @@ const Header = () => {
     <>
       <>
         <Navbar
-          style={{ backgroundColor: "#FEEE00", height: "60px", margin: "0" }}
+          style={{ backgroundColor: "#FEEE00", height: "6em", margin: "0" }}
         >
           <Container fluid>
             <div
@@ -33,13 +33,13 @@ const Header = () => {
             >
               <div className="row">
                 <img
-                  src="./assets/noon-logo-en.svg"
-                  style={{ width: "60%", height: "60%" }}
+                  src="https://z.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg"
+                  style={{ width: "50%", height: "50%" }}
                   className="mx-0 my-auto"
                 />
                 <img
-                  src="./assets/eg.svg"
-                  style={{ width: "15%", height: "15%" }}
+                  src="https://z.nooncdn.com/s/app/com/common/images/flags/eg.svg"
+                  style={{ width: "30%", height: "30%" }}
                   className="mx-0 px-0 my-auto"
                 />
                 <div
@@ -79,12 +79,12 @@ const Header = () => {
                 type="search"
                 id="gsearch"
                 name="gsearch"
-                placeholder="What are you Looking for?"
+                placeholder=" What are you Looking for?"
                 style={{
                   width: "100%",
                   borderRadius: "4px",
                   border: "none",
-                  height: "40px",
+                  height: "3.5em",
                 }}
               />
             </div>
@@ -158,54 +158,46 @@ const Header = () => {
           </Container>
         </Navbar>
 
-        <Navbar bg="light" variant="light">
-          <Container>
-            <Navbar.Brand href="/movies">Category</Navbar.Brand>
+        <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
+          <div className='container-fluid'>
+            <Navbar.Brand style={{borderRight:'1px solid lightgrey', width:'8em'}} href="/movies">All Categories</Navbar.Brand>
             <Nav className="me-auto">
               <Link
                 to="/movies"
                 className="myLink mx-2 "
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }}
               >
-                Electonics
+                ELECTRIONCS
               </Link>
-              <Link to="/favorites" className="mx-2 myLink">
-                Mobile
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/favorites" className="mx-2 myLink">
+                MOBILE
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Men
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                MEN
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Women
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                WOMEN
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Home
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                HOME
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Beauty&Health
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                BEAUTY & HEALTH
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                baby &toys
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                BABY & TOYS
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                SuperMarket
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                SUPERMARKET
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Sell on Noon
+              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+                SELL ON NOON
               </Link>
-              <Link to="/todo" className="mx-2 myLink">
-                Deals`
-              </Link>
-            </Nav>
-            <Nav className="">
-              <Link to="/login" className="mx-2 btn btn-success">
-                Login
-              </Link>
-              <Link to="/register" className="mx-2 btn btn-success">
-                Register
+              <Link style={{textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
+               <div style={{color:'red'}}>DEALS</div>
               </Link>
             </Nav>
-          </Container>
+          </div>
         </Navbar>
       </>
     </>
