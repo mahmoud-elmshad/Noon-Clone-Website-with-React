@@ -1,0 +1,36 @@
+.accordion-button {
+    background-color: transparent !important;
+    color:black !important;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    background: rgb(253, 249, 249);
+  }
+
+
+  .custom-accordion-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    cursor: pointer;
+  }
+
+.custom-accordion-title
+   {
+  padding: 1rem;
+}
+.custom-accordion-content{
+    padding-left: 3rem;
+}
+.custom-accordion-icon{
+    width:1rem;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+}
