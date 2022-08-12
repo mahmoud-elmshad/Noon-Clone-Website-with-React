@@ -9,7 +9,7 @@ const Sidebar = () => {
   return (
     <>
       <div className='pb-5' style={{ backgroundColor: '#F7F7FA' }}>
-        <div className='container'>
+        <div className='container-fluid'>
           <div className="row">
             <div className="col-3 px-0">
               {/* fulfillment section */}
@@ -189,7 +189,7 @@ const Sidebar = () => {
                 </div>
               </div>
               <div className='d-flex flex-wrap'>
-                <Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards />
+                <Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards /><Cards />
               </div>
               {/* <Gallery className='my-3' />
               <Gallery className='my-3' />

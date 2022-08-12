@@ -24,7 +24,7 @@ const Header = () => {
     <>
       <>
         <Navbar
-          style={{ backgroundColor: "#FEEE00", height: "6em", margin: "0" }}
+          style={{ maxWidth:'100%', backgroundColor: "#FEEE00", height: "6em", margin: "0" }}
         >
           <Container fluid>
             <div
@@ -91,7 +91,7 @@ const Header = () => {
 
             <div
               className="d-flex justify-content-end"
-              style={{ display: "inline", alignContent: "end" }}
+              style={{ width:'100%', display: "inline", alignContent: "end" }}
             >
               <button class="btn mx-0 px-0">
                 {" "}
@@ -158,7 +158,7 @@ const Header = () => {
           </Container>
         </Navbar>
 
-        <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
+        {/* <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
           <div className='container-fluid'>
             <Navbar.Brand style={{borderRight:'1px solid lightgrey', width:'8em'}} href="/movies">All Categories</Navbar.Brand>
             <Nav className="me-auto">
@@ -198,7 +198,7 @@ const Header = () => {
               </Link>
             </Nav>
           </div>
-        </Navbar>
+        </Navbar> */}
       </>
     </>
   );

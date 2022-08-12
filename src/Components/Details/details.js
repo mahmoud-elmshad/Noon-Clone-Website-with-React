@@ -5,8 +5,13 @@ import DetailsService from '../../services/details.services'
 import { Link } from 'react-router-dom';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Gallery from './ItemCarsoul';
+// import { useSearchParams } from "react-router-dom";
+
 
 const Details = () => {
+    const queryParams = new URLSearchParams(window.location.search)
+    const id = queryParams.get("prdID")
+    console.log(id)
     const [option] = useState([
         {
             text: '1',
@@ -28,8 +33,9 @@ const Details = () => {
         getProduct();
     }, [])
     const getProduct = async () => {
-        const dataSnap = await DetailsService.getPrd('30m6jA8VzxdZwYEqY8ak')
+        const dataSnap = await DetailsService.getPrd(`${id}`)
         setPrd(dataSnap.data())
+        console.log(dataSnap.id);
     }
     return (
         <Container className='mb-5'>

@@ -1,19 +1,45 @@
-import React from "react";
+import React ,{ useState} from "react";
 import Card from "react-bootstrap/Card";
 import NumberFormat from "react-number-format";
 import { AiFillStar } from "react-icons/ai";
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import getProduct from './../../../Redux/action/action';
+
 
 export default function DealStyleVerticalComp(props) {
+
+  // const prds = useSelector((state) => state.product)
+  // const [product, setPrd] = useState(prds)
+  const navigate = useNavigate()
+
+  // const goDetails = () => {
+  //   setPrd(props)
+  //   if(Object.keys(prds).length ===0){
+
+  //     console.log("not yet");
+  //   }else{
+  //     navigate('/details')
+
+  //   }
+  // }
+  // const dispatch = useDispatch()
+  // dispatch(getProduct(product))
+
+  const goDetails = () => {
+    navigate(`/details?prdID=${props.id}`)
+  }
   return (
     <>
       {/* <div className=" mx-1" style={{ width: "14%" }}> */}
-      <div>
+      <div onClick={goDetails}>
         <Card style={{ border: "none" }}>
-          <Card.Img
-            variant="top"
-            src={props.imgurl}
+          
+            <Card.Img
+              variant="top"
+              src={props.imgurl}
             // style={{ height: 400 }}
-          />
+            />
           <Card.Body>
             <Card.Text
               style={{
@@ -24,9 +50,7 @@ export default function DealStyleVerticalComp(props) {
                 // height: 50,
               }}
             >
-              Xiaomi Watch S1 1.43" Touch Screen AMOLED HD Display 5ATM Water
-              Resistant 12 Days Battery Life GPS 117 Fitness Modes 200+ Watch
-              Faces Bluetooth Phone Call NFC Support Black{" "}
+              {props.description}
             </Card.Text>
             <Card.Text>
               <div className="fw-bold fs-5">

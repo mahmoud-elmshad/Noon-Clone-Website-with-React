@@ -12,13 +12,19 @@ import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Provider from './../node_modules/react-redux/es/components/Provider';
+import store from './Redux/store';
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <Provider store={store}>
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>
+ </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

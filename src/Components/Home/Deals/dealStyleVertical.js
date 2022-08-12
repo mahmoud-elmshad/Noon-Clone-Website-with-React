@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DealStyleVerticalComp from "./dealStyleVerticalComp";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
+import DetailsService from "../../../services/details.services";
 
 export default function DealStyleVertical() {
+
+  const [products, setPrds] = useState([]);
+  const [productSnap, setPrdSnap] = useState('');
+  const [option,setOptions] = useState([])
+
+  useEffect(() => {
+      getProduct();
+  }, [])
+  const getProduct = async () => {
+      const dataSnap = await DetailsService.getAllPrd()
+      setPrds(dataSnap.docs.map((doc)=>({...doc.data(),id: doc.id})))
+      // setPrdSnap(dataSnap.id)
+  }
+  // console.log(productSnap);
+  console.log(products);
+  products.map((value, key) => {
+      console.log(value.name)
+      option.push(value.name)
+  })
+  console.log(option)
+
   return (
     <>
       {/* <div className=" my-3 d-flex flex-row flex-wrap justify-content-center"> */}
@@ -30,71 +52,27 @@ export default function DealStyleVertical() {
             spaceBetween: 60,
           },
         }}
-        // loop={true}
-        // loopFillGroupWithBlank={true}
-        // pagination={{
-        //   clickable: true,
-        // }}
+
         navigation={true}
         modules={[Pagination, Navigation]}
         className="mySwiper my-5"
       >
-        <SwiperSlide>
+        {products.map((value,key)=>{
+          
+
+          return<>
+          
+          <SwiperSlide key={value.id}>
           <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1655474955/N25937075A_1.jpg"
-            price="9000"
-            oldPrice="10000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1634642970/N51445769A_1.jpg"
-            price="7000"
+            imgurl={value.img}
+            price={value.price}
+            description={value.description}
+            id={value.id}
             oldPrice="12000"
           />
         </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1654846186/N40633047A_1.jpg"
-            price="7000"
-            oldPrice="12000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1654754865/N52891116A_1.jpg"
-            price="7000"
-            oldPrice="11000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1653910008/N22795303A_1.jpg"
-            price="7000"
-            oldPrice="10000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1648570074/N50908490A_1.jpg"
-            price="8900"
-            oldPrice="12000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1582883814/N35187596A_1.jpg"
-            price="2000"
-            oldPrice="5000"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1637143507/N42547190A_1.jpg"
-            price="14000"
-            oldPrice="17000"
-          />
-        </SwiperSlide>
+          </>
+        })}
       </Swiper>
 
       {/* </div> */}
