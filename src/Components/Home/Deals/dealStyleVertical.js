@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DealStyleVerticalComp from "./dealStyleVerticalComp";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
+import DetailsService from "../../../services/details.services";
+import { Link } from "react-router-dom";
 
 export default function DealStyleVertical() {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  async function getProduct() {
+    const productSnap = await DetailsService.getPrd("gPALbo3FfUqOV6TQhXyN");
+    setProduct(productSnap.data());
+  }
+  console.log(product);
   return (
     <>
       {/* <div className=" my-3 d-flex flex-row flex-wrap justify-content-center"> */}
@@ -48,8 +60,9 @@ export default function DealStyleVertical() {
         </SwiperSlide>
         <SwiperSlide>
           <DealStyleVerticalComp
-            imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1634642970/N51445769A_1.jpg"
-            price="7000"
+            name={product.name}
+            imgurl={product.img}
+            price={product.price}
             oldPrice="12000"
           />
         </SwiperSlide>
