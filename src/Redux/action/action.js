@@ -1,7 +1,7 @@
 
-export default function getProduct(data) {
+export default function addProduct(data) {
     return {
-        type: 'PRODUCT-DATA',
+        type: 'PRODUCT-ID',
         payload: data
     }
 }

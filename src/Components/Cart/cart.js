@@ -1,18 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CartCard from "./cartCard";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import NumberFormat from "react-number-format";
+import { useSelector } from 'react-redux';
+import DetailsService from "../../services/details.services";
+import { async } from "@firebase/util";
+import { useDispatch } from 'react-redux';
+import addProduct from './../../Redux/action/action';
 
 export default function Cart() {
+
+  let [dataPrd, setDataPrd] = useState([])
+  const [keys, setKeys] = useState([]);
+  const [refresh, setRefresh] = useState(true);
+
+  useEffect(() => {
+    getFun()
+  }, [refresh])
+
+  const getFun = () => {
+
+    for (const key in localStorage) {
+      if (localStorage.hasOwnProperty(key)) {
+        keys.push(key)
+        setDataPrd(prev => ([...prev, JSON.parse(localStorage.getItem(key))]))
+      }
+    };
+
+    setKeys(keys)
+
+  }
+
+  const deleteCard = (id) => {
+    localStorage.removeItem(id);
+    window.location.reload()
+  }
+
+
+
   return (
     <>
+
+
       <div style={{ backgroundColor: "#F7F7FA" }}>
         <div className="container py-5">
           {/* <div className="col-1"></div> */}
           <div className="row">
             <div className="col-md-8">
-              <div className="fw-bold fs-3">Cart</div>
+              <div className="fw-bold fs-3">CART</div>
               <div>
                 <img
                   src="https://k.nooncdn.com/cms/pages/20220415/e93ff79763e043639cb3c7740f4d5ab4/en_cart-01.png"
@@ -20,12 +56,21 @@ export default function Cart() {
                   className="img-fluid my-3 w-100"
                 />
               </div>
-              <CartCard
-                imgurl="https://z.nooncdn.com/products/tr:n-t_120/v1655474955/N25937075A_1.jpg"
-                brand="SKYLINE"
-                title="32-Inch HD LED TV 3222A Black"
-                trader="noon"
-              />
+              {dataPrd.length > 0 && dataPrd.map((value, key) => {
+
+                return <>
+
+                  <CartCard
+                    delete={deleteCard}
+                    imgurl={value.img}
+                    brand='Samsung'
+                    title={value.name}
+                    trader="noon"
+                    id={keys[key]}
+                  />
+
+                </>
+              })}
               <button
                 className="btn btn-outline-primary text-primary"
                 style={{ backgroundColor: "white" }}
@@ -97,6 +142,11 @@ export default function Cart() {
           {/* <div className="row my-5"></div> */}
         </div>
       </div>
+
+
+
+
+
     </>
   );
 }

@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+
+
+
 export default function CartCard(props) {
+  let [refresh, setRefresh] = useState(false)
+
+
   return (
     <>
       <div className="d-flex my-3 gap-3" style={{ backgroundColor: "white" }}>
@@ -49,6 +55,7 @@ export default function CartCard(props) {
                 alt=""
               />
               <button
+                onClick={() => { props.delete(props.id) }}
                 className="btn btn-light fs-5"
                 style={{ backgroundColor: "white", border: "none" }}
               >

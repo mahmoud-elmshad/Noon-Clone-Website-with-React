@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
-
 import { Modal, show, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NoonNavbar from "./navbar";
 import SelectSearch from "react-select-search";
-import DetailsService from "../../../services/details.services";
+import DetailsService from "./../../../services/details.services";
 
 // import './header.css';
 // import myForm from './../Login/form';
+import { Link } from "react-router-dom";
 
 const Header2 = () => {
   //handling login model show
-
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   //handling MAP
-
   const [showMap, setShowMap] = useState(false);
 
   const handleShowMap = () => setShowMap(true);
@@ -40,7 +37,6 @@ const Header2 = () => {
     setShowNav(false);
   };
   const [option, setOptions] = useState([]);
-
   const [products, setPrds] = useState([]);
 
   useEffect(() => {
@@ -53,7 +49,6 @@ const Header2 = () => {
   products.map((value, key) => {
     console.log(value.name);
   });
-
   console.log(products);
 
   //  GoogleMap
@@ -64,6 +59,9 @@ const Header2 = () => {
   });
   console.log(option);
 
+  const fun = () => {
+    alert("aaaa");
+  };
   return (
     <>
       <div
@@ -179,7 +177,7 @@ const Header2 = () => {
                     <h4>welcome Back !</h4>
                     <h3> Sign in to your account</h3>
                     <p>
-                      Don't have an account? <a>Sign up</a>
+                      Don't have an account? <a href="#">Sign up</a>
                     </p>
                   </div>
 
@@ -217,15 +215,14 @@ const Header2 = () => {
                 >
                   Sign in
                 </button>
-                <button className="btn">
-                  {" "}
-                  Cart{" "}
-                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
               </Modal.Footer>
             </Modal>
           </div>
         </div>
+      </div>
+      <div onClick={fun}>
+        {/* {" "} */}
+        Cart <i className="fa fa-shopping-cart" aria-hidden="true"></i>
       </div>
     </>
   );
