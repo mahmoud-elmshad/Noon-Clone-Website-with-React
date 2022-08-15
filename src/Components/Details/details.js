@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { CDBSelect, CDBContainer, CDBBtn } from 'cdbreact';
 import DetailsService from '../../services/details.services'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Gallery from './ItemCarsoul';
 // import { useSearchParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import addProduct from './../../Redux/action/action';
 
 
 const Details = () => {
     const queryParams = new URLSearchParams(window.location.search)
     const id = queryParams.get("prdID")
-    console.log(id)
+    // console.log(id)
     const [option] = useState([
         {
             text: '1',
@@ -26,8 +29,21 @@ const Details = () => {
             value: '3',
         },
     ]);
-
     const [product, setPrd] = useState([]);
+    const data = useSelector((state) => state.product)
+    let [dataPrd, setDataPrd] = useState(data)
+
+    const addToCart = () => {
+        setDataPrd(dataPrd.concat(id))
+        window.localStorage.setItem(id, JSON.stringify(product))
+        console.log(product)
+        console.log(dataPrd)
+
+    }
+    const dispatch = useDispatch();
+    dispatch(addProduct(dataPrd))
+
+
 
     useEffect(() => {
         getProduct();
@@ -35,7 +51,7 @@ const Details = () => {
     const getProduct = async () => {
         const dataSnap = await DetailsService.getPrd(`${id}`)
         setPrd(dataSnap.data())
-        console.log(dataSnap.id);
+        // console.log(dataSnap.id);
     }
     return (
         <Container className='mb-5'>
@@ -82,7 +98,7 @@ const Details = () => {
                                 <CDBSelect style={{ width: '70%' }} options={option} selected={option[0].text} />
                             </Col>
                             <Col sm={9}>
-                                <CDBBtn style={{ width: '100%', marginTop: '2rem', backgroundColor: "rgb(43, 76, 215)" }}>Add To Cart</CDBBtn>
+                                <CDBBtn onClick={() => addToCart()} style={{ width: '100%', marginTop: '2rem', backgroundColor: "rgb(43, 76, 215)" }}>Add To Cart</CDBBtn>
                             </Col>
                         </Row>
                     </div>

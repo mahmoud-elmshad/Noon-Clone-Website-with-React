@@ -150,10 +150,12 @@ const Header = () => {
                   </button>
                 </Modal.Footer>
               </Modal>
+              <Link to={'/cart'}>
               <button class="btn">
                 {" "}
                 Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               </button>
+              </Link>
             </div>
           </Container>
         </Navbar>

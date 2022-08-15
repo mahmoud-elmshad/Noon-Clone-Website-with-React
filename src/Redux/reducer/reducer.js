@@ -1,10 +1,10 @@
 const INTIAL_STATE = {
-    product: {}
+    product: []
 }
 
 export default function ProductReducer(state = INTIAL_STATE, action) {
     switch (action.type) {
-        case "PRODUCT-DATA":
+        case "PRODUCT-ID":
             return {
                 ...state,
                 product: action.payload

@@ -10,6 +10,7 @@ import SelectSearch from 'react-select-search';
 
 // import './header.css';
 // import myForm from './../Login/form';
+import { Link } from 'react-router-dom';
 
 const Header2 = () => {
 
@@ -36,7 +37,7 @@ const Header2 = () => {
   const hideDropdown = e => {
     setShowNav(false);
   }
-  const [option,setOptions] = useState([])
+  const [option, setOptions] = useState([])
   const [products, setPrds] = useState([]);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Header2 = () => {
     const dataSnap = await DetailsService.getAllPrd()
     setPrds(dataSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   }
-  products.map((value, key) => {console.log(value.name);})
+  products.map((value, key) => { console.log(value.name); })
   console.log(products);
 
   //  GoogleMap
@@ -54,10 +55,10 @@ const Header2 = () => {
   products.map((value, key) => {
     console.log(value.name)
     option.push(value.name)
-})
-console.log(option)
+  })
+  console.log(option)
 
-
+const fun = ()=>{alert('aaaa')}
   return (
     <>
 
@@ -117,28 +118,28 @@ console.log(option)
           <div className="col-8 d-flex justify-content-center mx-0 ">
             {products.map((value, key) => {
               return <>
-                   <SelectSearch
-               options={[
-                {
-                  name: 'Afghanistan',
-                  value: 'AF'
-                },
-                {
-                  name: 'Åland Islands',
-                  value: 'AX'
-                },
-                {
-                  name: 'Albania',
-                  value: 'AL'
-                }]}
-                 search placeholder="What You Looking For?"
-                style={{
-                  width: "100%",
-                  borderRadius: "4px",
-                  border: "none",
-                  height: "40px",
-                }}
-              />
+                <SelectSearch
+                  options={[
+                    {
+                      name: 'Afghanistan',
+                      value: 'AF'
+                    },
+                    {
+                      name: 'Åland Islands',
+                      value: 'AX'
+                    },
+                    {
+                      name: 'Albania',
+                      value: 'AL'
+                    }]}
+                  search placeholder="What You Looking For?"
+                  style={{
+                    width: "100%",
+                    borderRadius: "4px",
+                    border: "none",
+                    height: "40px",
+                  }}
+                />
               </>
             })}
 
@@ -203,17 +204,20 @@ console.log(option)
                 <button type="button" className="btn btn-primary btn-block mb-4">
                   Sign in
                 </button>
-                <button className="btn">
-                  {" "}
-                  Cart <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                </button>
+
+
+
               </Modal.Footer>
             </Modal>
 
           </div>
         </div>
       </div>
+      <div onClick={fun} >
+        {/* {" "} */}
+        Cart <i className="fa fa-shopping-cart" aria-hidden="true"></i>
 
+      </div>
     </>
 
   );
