@@ -24,7 +24,12 @@ const Header = () => {
     <>
       <>
         <Navbar
-          style={{ backgroundColor: "#FEEE00", height: "6em", margin: "0" }}
+          style={{
+            maxWidth: "100%",
+            backgroundColor: "#FEEE00",
+            height: "6em",
+            margin: "0",
+          }}
         >
           <Container fluid>
             <div
@@ -36,11 +41,13 @@ const Header = () => {
                   src="https://z.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg"
                   style={{ width: "50%", height: "50%" }}
                   className="mx-0 my-auto"
+                  alt=""
                 />
                 <img
                   src="https://z.nooncdn.com/s/app/com/common/images/flags/eg.svg"
                   style={{ width: "30%", height: "30%" }}
                   className="mx-0 px-0 my-auto"
+                  alt=""
                 />
                 <div
                   style={{ width: "50px", marginTop: "5%" }}
@@ -91,7 +98,7 @@ const Header = () => {
 
             <div
               className="d-flex justify-content-end"
-              style={{ display: "inline", alignContent: "end" }}
+              style={{ width: "100%", display: "inline", alignContent: "end" }}
             >
               <button class="btn mx-0 px-0">
                 {" "}
@@ -158,7 +165,7 @@ const Header = () => {
           </Container>
         </Navbar>
 
-        <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
+        {/* <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
           <div className='container-fluid'>
             <Navbar.Brand style={{borderRight:'1px solid lightgrey', width:'8em'}} href="/movies">All Categories</Navbar.Brand>
             <Nav className="me-auto">
@@ -198,7 +205,7 @@ const Header = () => {
               </Link>
             </Nav>
           </div>
-        </Navbar>
+        </Navbar> */}
       </>
     </>
   );

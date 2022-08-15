@@ -7,6 +7,9 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import Gallery from "./ItemCarsoul";
 
 const Details = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  const id = queryParams.get("prdID");
+  console.log(id);
   const [option] = useState([
     {
       text: "1",
@@ -28,9 +31,10 @@ const Details = () => {
     getProduct();
   }, []);
   const getProduct = async () => {
-    const dataSnap = await DetailsService.getPrd("gPALbo3FfUqOV6TQhXyN");
+    const dataSnap = await DetailsService.getPrd(id);
     setPrd(dataSnap.data());
   };
+
   return (
     <Container className="mb-5">
       <Row className="my-3">
