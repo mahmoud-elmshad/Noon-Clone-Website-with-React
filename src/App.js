@@ -17,6 +17,7 @@ import Header2 from "./Components/noon-nav/Header/header";
 import Footer from "./Components/Footer/footer";
 import Sidebar from "./Components/Side-bar/side-bar";
 import NoonNavbar from "./Components/noon-nav/Header/navbar";
+
 import { AuthProvider } from "./Auth";
 import Login from "./Components/Sign-in/Login";
 import Signup from "./Components/Sign-up/Signup";
@@ -30,6 +31,7 @@ function App() {
       {/* <AuthProvider> */}
       <div>
         <Header />
+
         <NoonNavbar />
 
         {/* <Router> */}

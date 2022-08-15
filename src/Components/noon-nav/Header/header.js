@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+
 import { Modal, show, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NoonNavbar from "./navbar";
 import SelectSearch from "react-select-search";
@@ -13,12 +15,14 @@ import DetailsService from "../../../services/details.services";
 
 const Header2 = () => {
   //handling login model show
+
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   //handling MAP
+
   const [showMap, setShowMap] = useState(false);
 
   const handleShowMap = () => setShowMap(true);
@@ -36,6 +40,7 @@ const Header2 = () => {
     setShowNav(false);
   };
   const [option, setOptions] = useState([]);
+
   const [products, setPrds] = useState([]);
 
   useEffect(() => {
@@ -48,6 +53,7 @@ const Header2 = () => {
   products.map((value, key) => {
     console.log(value.name);
   });
+
   console.log(products);
 
   //  GoogleMap

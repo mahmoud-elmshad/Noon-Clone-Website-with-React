@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 import Provider from "./../node_modules/react-redux/es/components/Provider";
 import store from "./Redux/store";
 import { AuthProvider } from "./Auth";
