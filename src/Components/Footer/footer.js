@@ -3,7 +3,7 @@ import { CDBFooter, CDBFooterLink, CDBBox, CDBBtn, CDBIcon } from "cdbreact";
 
 const Footer = () => {
   return (<>
-    <div className='' style={{ height: '6em', width: '100%', backgroundColor: '#F7F7FA',borderBottom:'1px solid rgb(220, 220, 220)',borderTop:'1px solid rgb(220, 220, 220)' }}>
+    <div className='' style={{ height: '6em', width: '100%', backgroundColor: '#F7F7FA', borderBottom: '1px solid rgb(220, 220, 220)', borderTop: '1px solid rgb(220, 220, 220)' }}>
       <div className='container'>
         <div style={{ paddingTop: '.5rem' }} className='d-flex justify-content-between'>
           <div style={{ overflow: 'hidden', width: '55vh', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -163,34 +163,34 @@ const Footer = () => {
         </div>
       </CDBBox>
     </CDBFooter>
-    <div style={{border:'1px solid #E2E5F1',backgroundColor:'#F7F7FA',height:'10em'}}>
-          <div className='py-5 container-fluid'>
-            <div className=' d-flex justify-content-between'>
+    <div style={{ border: '1px solid #E2E5F1', backgroundColor: '#F7F7FA', height: '10em' }}>
+      <div className='py-5 container-fluid'>
+        <div className=' d-flex justify-content-between'>
 
-              <small className="text-center mt-3">
-                &copy; Noon, 2020. All rights reserved.
-              </small>
+          <small className="text-center mt-3">
+            &copy; Noon, 2020. All rights reserved.
+          </small>
 
-              <div>
-                <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/mastercard-color.svg"/>
-                <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/visa-color.svg"/>
-                <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/cash-color.svg"/>
-                <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/amex-color.svg"/>
-              </div>
-
-              <div>
-                <span><a className="text-decoration-none" href='#'>Careers</a></span>
-                <span className='mx-3'><a className="text-decoration-none" href='#'>Warrenty Policy</a></span>
-                <span><a className="text-decoration-none" href='#'>Sell with us</a></span>
-                <span className='mx-3'><a className="text-decoration-none"href='#'>Terms of Use</a></span>
-                <span><a className="text-decoration-none" href='#'>Terms of Sale</a></span>
-                <span className='mx-3'><a className="text-decoration-none" href='#'>Privacy Policy</a></span>
-              </div>
-
-
-            </div>
+          <div>
+            <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/mastercard-color.svg" />
+            <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/visa-color.svg" />
+            <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/cash-color.svg" />
+            <img className='mx-2' style={{ height: '20px' }} src="https://z.nooncdn.com/s/app/com/noon/images/amex-color.svg" />
           </div>
+
+          <div>
+            <span><a className="text-decoration-none" href='#'>Careers</a></span>
+            <span className='mx-3'><a className="text-decoration-none" href='#'>Warrenty Policy</a></span>
+            <span><a className="text-decoration-none" href='#'>Sell with us</a></span>
+            <span className='mx-3'><a className="text-decoration-none" href='#'>Terms of Use</a></span>
+            <span><a className="text-decoration-none" href='#'>Terms of Sale</a></span>
+            <span className='mx-3'><a className="text-decoration-none" href='#'>Privacy Policy</a></span>
+          </div>
+
+
         </div>
+      </div>
+    </div>
   </>);
 };
 

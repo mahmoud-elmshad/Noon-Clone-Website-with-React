@@ -5,7 +5,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-
+import { Oval } from 'react-loader-spinner'
 import { auth } from "./firebase";
 
 export const AuthContext = createContext();
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className='d-flex justify-content-center my-5'><Oval color="#00BFFF" height={80} width={80} /></div>
 
   return (
     <AuthContext.Provider value={{ user, signUp, logIn, logOut }}>

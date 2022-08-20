@@ -6,8 +6,7 @@ import CategoryStyleComp from "./categoryStyleComp";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 export default function CategoryStyle(props) {
-  // props.imgurls.map((image) => console.log(image));
-  console.log(props.imgurls);
+
 
   function subTitle() {
     const dealsubtitle = props.dealsubtitle;

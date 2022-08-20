@@ -5,39 +5,72 @@ import Button from "react-bootstrap/Button";
 import NumberFormat from "react-number-format";
 import { useSelector } from 'react-redux';
 import DetailsService from "../../services/details.services";
-import { async } from "@firebase/util";
 import { useDispatch } from 'react-redux';
 import addProduct from './../../Redux/action/action';
+import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
+import PayPalCheckOutButton from "../PayPal/PayPalCheckOutButton";
 
 export default function Cart() {
-
+  const navigate = useNavigate();
   let [dataPrd, setDataPrd] = useState([])
-  const [keys, setKeys] = useState([]);
-  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
-    getFun()
-  }, [refresh])
-
-  const getFun = () => {
-
+    const cartItems = [];
     for (const key in localStorage) {
       if (localStorage.hasOwnProperty(key)) {
-        keys.push(key)
-        setDataPrd(prev => ([...prev, JSON.parse(localStorage.getItem(key))]))
+        if (key.includes('__paypal_storage__')) {
+
+        } else {
+          cartItems.push({ ...JSON.parse(localStorage.getItem(key)), key })
+
+        }
+
       }
     };
+    // cartItems.filter((item)=>item)
+    console.log(cartItems)
+    setDataPrd(cartItems)
 
-    setKeys(keys)
 
-  }
+  }, [])
 
   const deleteCard = (id) => {
-    localStorage.removeItem(id);
-    window.location.reload()
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You are going to remove this product!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Removed!',
+          'Your product has been removed.',
+          'success'
+        )
+        localStorage.removeItem(id);
+        setDataPrd(dataPrd.filter((value) => value.key != id))
+      }
+    })
+
   }
+   function  findSumUsingMap() {
+    let total = 0;
+      dataPrd.map(({ price, discount }) => total = total + (price - (price * (discount / 100))))
+      return Math.ceil(total);
+  }
+  const totalPrice = findSumUsingMap()
 
-
+  const goHome = () => {
+    navigate('/')
+  }
+  // const payPalProduct = {
+  //   description: 'Noon Shopping',
+  //   price: ((totalPrice / 19.14).toFixed(1))
+  // }
 
   return (
     <>
@@ -56,24 +89,25 @@ export default function Cart() {
                   className="img-fluid my-3 w-100"
                 />
               </div>
-              {dataPrd.length > 0 && dataPrd.map((value, key) => {
+              {dataPrd.length > 0 && dataPrd.map((value) => {
 
-                return <>
-
+                return (
                   <CartCard
+                    key={value.key}
                     delete={deleteCard}
                     imgurl={value.img}
-                    brand='Samsung'
+                    prdBrand={value.brand}
                     title={value.name}
                     trader="noon"
-                    id={keys[key]}
+                    id={value.key}
                   />
+                )
 
-                </>
               })}
               <button
                 className="btn btn-outline-primary text-primary"
                 style={{ backgroundColor: "white" }}
+                onClick={() => goHome()}
               >
                 Continue Shopping
               </button>
@@ -98,7 +132,7 @@ export default function Cart() {
                 <div>Subtotal</div>
                 <div>
                   <NumberFormat
-                    value="9000"
+                    value={totalPrice}
                     // className="foo"
                     displayType={"text"}
                     thousandSeparator={true}
@@ -115,7 +149,7 @@ export default function Cart() {
                 <div className="fw-bold fs-4">Total</div>
                 <div className="fw-bold fs-4">
                   <NumberFormat
-                    value="9000"
+                    value={totalPrice}
                     // className="foo"
                     displayType={"text"}
                     thousandSeparator={true}
@@ -133,8 +167,12 @@ export default function Cart() {
                 />
                 <div>Monthly payment plans from EGP 500</div>
               </div>
-              <div className="d-flex">
-                <button className="w-100 btn btn-primary py-3">CHECKOUT</button>
+              <div className="paypal-button-container">
+                <PayPalCheckOutButton
+                  description = {'Noon Shopping'}
+                  value = {((totalPrice / 19.14).toFixed(1))}
+
+                />
               </div>
             </div>
             {/* <div className="col-1"></div> */}

@@ -6,7 +6,7 @@
 
 }
 
-body {
+* {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -91,7 +91,7 @@ a{
 .dropdown-toggle::after {
   content: none;
 }
-.navbar .megamenu{}
+
 /* ============ desktop view ============ */
 @media all and (min-width: 992px) {
 	
@@ -196,3 +196,4 @@ a{
   height: 400px;
   margin:2% 0%;
 }
+

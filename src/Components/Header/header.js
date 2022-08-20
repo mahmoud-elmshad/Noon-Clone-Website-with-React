@@ -63,7 +63,7 @@ const Header = () => {
                     style={{ float: "right", width: "5px" }}
                     onClick={handleShowMap}
                   >
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    <i className="fa fa-caret-down" aria-hidden="true"></i>
                   </button>
                   <Modal show={showMap} onHide={handleCloseMap}>
                     <Modal.Header closeButton>
@@ -100,14 +100,14 @@ const Header = () => {
               className="d-flex justify-content-end"
               style={{ width: "100%", display: "inline", alignContent: "end" }}
             >
-              <button class="btn mx-0 px-0">
+              <button className="btn mx-0 px-0">
                 {" "}
                 العربية <span>|</span>
               </button>
 
-              <button class="btn mx-0 px-0" onClick={handleShow}>
+              <button className="btn mx-0 px-0" onClick={handleShow}>
                 {" "}
-                sign in<i class="fa fa-user-o" aria-hidden="true"></i>{" "}
+                sign in<i className="fa fa-user-o" aria-hidden="true"></i>{" "}
                 <span>|</span>
               </button>
               <Modal show={show} onHide={handleClose}>
@@ -124,43 +124,43 @@ const Header = () => {
                       </p>
                     </div>
 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example1">
+                    <div className="form-outline mb-4">
+                      <label className="form-label" for="form2Example1">
                         Email address
                       </label>
                       <input
                         type="email"
                         id="form2Example1"
-                        class="form-control"
+                        className="form-control"
                       />
                     </div>
 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example2">
+                    <div className="form-outline mb-4">
+                      <label className="form-label" for="form2Example2">
                         Password
                       </label>
                       <input
                         type="password"
                         id="form2Example2"
-                        class="form-control"
+                        className="form-control"
                       />
                     </div>
 
-                    <div class="col">
+                    <div className="col">
                       <a href="#!">Forgot password?</a>
                     </div>
                   </form>
                 </Modal.Body>
                 <Modal.Footer>
-                  <button type="button" class="btn btn-primary btn-block mb-4">
+                  <button type="button" className="btn btn-primary btn-block mb-4">
                     Sign in
                   </button>
                 </Modal.Footer>
               </Modal>
               <Link to={'/cart'}>
-              <button class="btn">
+              <button className="btn">
                 {" "}
-                Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                Cart <i className="fa fa-shopping-cart" aria-hidden="true"></i>
               </button>
               </Link>
             </div>
