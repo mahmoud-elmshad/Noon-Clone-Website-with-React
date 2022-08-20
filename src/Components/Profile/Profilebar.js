@@ -69,24 +69,39 @@ export default function Profilebar() {
           <hr className="ms-4" />
 
           <Link
-            className="text-decoration-none badge bg-secondary text-wrap py-3 fs-6 ms-4 mb-3"
+            className="text-decoration-none text-wrap  fs-6 ms-4 mb-3"
             to={"profile"}
-            style={{ color: "white" }}
+            style={{ color: "black" }}
           >
+            <img
+              src="https://f.nooncdn.com/s/app/com/noon/design-system/creative-icons/account-profile.svg"
+              alt=""
+              className="me-3"
+            />
             Profile
           </Link>
           <Link
-            className="text-decoration-none badge bg-secondary text-wrap py-3 fs-6 ms-4 mb-3"
+            className="text-decoration-none text-wrap  fs-6 ms-4 mb-3"
             to={"address"}
-            style={{ color: "white" }}
+            style={{ color: "black" }}
           >
+            <img
+              src="https://f.nooncdn.com/s/app/com/noon/design-system/creative-icons/account-addresses.svg"
+              alt=""
+              className="me-3"
+            />
             Address
           </Link>
           <Link
-            className="text-decoration-none badge bg-secondary text-wrap py-3 fs-6 ms-4 mb-3"
+            className="text-decoration-none text-wrap fs-6 ms-4 mb-3"
             to={"orders"}
-            style={{ color: "white" }}
+            style={{ color: "black" }}
           >
+            <img
+              src="https://f.nooncdn.com/s/app/com/noon/design-system/creative-icons/account-orders.svg"
+              alt=""
+              className="me-3"
+            />
             Orders
           </Link>
           {/* <hr className="ms-4" />
