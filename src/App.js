@@ -23,6 +23,12 @@ import Login from "./Components/Sign-in/Login";
 import Signup from "./Components/Sign-up/Signup";
 import PrivateRoute from "./PrivateRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import Information from "./Components/Header/Information";
+import Away from "./Components/Header/Away";
+import Profile from "./Components/Profile/Profile";
+import Address from "./Components/Profile/Address";
+import Profilebar from "./Components/Profile/Profilebar";
+import Orders from "./Components/Profile/Orders";
 
 function App() {
   return (
@@ -30,12 +36,13 @@ function App() {
       {/* <Header /> */}
       {/* <AuthProvider> */}
       <div>
-        <Header />
+        {/* <Header /> */}
 
-        <NoonNavbar />
+        {/* <NoonNavbar /> */}
 
         {/* <Router> */}
         <AuthProvider>
+          <Header />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="sidebar" element={<Sidebar />} />
@@ -51,6 +58,35 @@ function App() {
             <Route path="details" element={<Details />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="info" element={<Information />} />
+            <Route path="newinfo" element={<Away />} />
+
+            <Route path="profilebar" element={<Profilebar />}>
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="address"
+                element={
+                  <ProtectedRoute>
+                    <Address />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="orders"
+                element={
+                  <ProtectedRoute>
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
           </Routes>
         </AuthProvider>
         {/* </Router> */}

@@ -3,46 +3,49 @@ import CartCard from "./cartCard";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import NumberFormat from "react-number-format";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import DetailsService from "../../services/details.services";
 import { async } from "@firebase/util";
-import { useDispatch } from 'react-redux';
-import addProduct from './../../Redux/action/action';
+import { useDispatch } from "react-redux";
+import addProduct from "./../../Redux/action/action";
 
 export default function Cart() {
-
-  let [dataPrd, setDataPrd] = useState([])
+  let [dataPrd, setDataPrd] = useState([]);
   const [keys, setKeys] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
-    getFun()
-  }, [refresh])
-
-  const getFun = () => {
-
+    // getFun();
+    // localStorage.clear();
     for (const key in localStorage) {
       if (localStorage.hasOwnProperty(key)) {
-        keys.push(key)
-        setDataPrd(prev => ([...prev, JSON.parse(localStorage.getItem(key))]))
+        keys.push(key);
+        setDataPrd((prev) => [...prev, JSON.parse(localStorage.getItem(key))]);
       }
-    };
+    }
 
-    setKeys(keys)
+    setKeys(keys);
+  }, [refresh]);
 
-  }
+  // const getFun = () => {
+  //   for (const key in localStorage) {
+  //     if (localStorage.hasOwnProperty(key)) {
+  //       keys.push(key);
+  //       setDataPrd((prev) => [...prev, JSON.parse(localStorage.getItem(key))]);
+  //     }
+  //   }
+
+  //   setKeys(keys);
+  // };
 
   const deleteCard = (id) => {
     localStorage.removeItem(id);
-    window.location.reload()
-  }
-
-
+    setRefresh(false);
+    window.location.reload();
+  };
 
   return (
     <>
-
-
       <div style={{ backgroundColor: "#F7F7FA" }}>
         <div className="container py-5">
           {/* <div className="col-1"></div> */}
@@ -56,21 +59,21 @@ export default function Cart() {
                   className="img-fluid my-3 w-100"
                 />
               </div>
-              {dataPrd.length > 0 && dataPrd.map((value, key) => {
-
-                return <>
-
-                  <CartCard
-                    delete={deleteCard}
-                    imgurl={value.img}
-                    brand='Samsung'
-                    title={value.name}
-                    trader="noon"
-                    id={keys[key]}
-                  />
-
-                </>
-              })}
+              {dataPrd.length > 0 &&
+                dataPrd.map((value, key) => {
+                  return (
+                    <>
+                      <CartCard
+                        delete={deleteCard}
+                        imgurl={value.img}
+                        brand="Samsung"
+                        title={value.name}
+                        trader="noon"
+                        id={keys[key]}
+                      />
+                    </>
+                  );
+                })}
               <button
                 className="btn btn-outline-primary text-primary"
                 style={{ backgroundColor: "white" }}
@@ -142,11 +145,6 @@ export default function Cart() {
           {/* <div className="row my-5"></div> */}
         </div>
       </div>
-
-
-
-
-
     </>
   );
 }
