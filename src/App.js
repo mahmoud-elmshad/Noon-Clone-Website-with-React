@@ -1,19 +1,17 @@
 import "./App.css";
 import Cart from "./Components/Cart/cart";
-import { Route, Routes } from "react-router-dom";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/home";
 import Details from "./Components/Details/details";
 import Header from "./Components/Header/header";
-import React from "react";
 import Footer from "./Components/Footer/footer";
 import Sidebar from "./Components/Side-bar/side-bar";
-
 import { AuthProvider } from "./Auth";
 import Login from "./Components/Sign-in/Login";
 import Signup from "./Components/Sign-up/Signup";
 
 import ProtectedRoute from "./ProtectedRoute";
-
 import Information from "./Components/Header/Information";
 import Away from "./Components/Header/Away";
 import Profile from "./Components/Profile/Profile";
@@ -39,7 +37,9 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="sidebar" element={<Sidebar />} />
+
               <Route exact path="cart" element={<Cart />} />
+
               <Route path="details" element={<Details />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />

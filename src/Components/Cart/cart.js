@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CartCard from "./cartCard";
-import Form from "react-bootstrap/Form";
 
 import NumberFormat from "react-number-format";
-import { useSelector } from "react-redux";
-import DetailsService from "../../services/details.services";
 
-import { useDispatch } from "react-redux";
-import addProduct from "./../../Redux/action/action";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PayPalCheckOutButton from "../PayPal/PayPalCheckOutButton";

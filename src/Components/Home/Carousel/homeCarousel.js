@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Carousel from "react-bootstrap/Carousel";
-import Slider from "react-slick";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper";
 export default function HomeCarousel() {

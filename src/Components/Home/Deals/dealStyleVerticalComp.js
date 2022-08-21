@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-
 import Card from "react-bootstrap/Card";
 import NumberFormat from "react-number-format";
 import { AiFillStar } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import getProduct from "./../../../Redux/action/action";
 
 export default function DealStyleVerticalComp(props) {
 

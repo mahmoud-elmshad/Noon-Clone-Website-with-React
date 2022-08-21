@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Information from "./Information";
+
 import Location from "./Location";
 import { useAuth } from "./../../Auth";
 import Login from "../Sign-in/Login";
@@ -230,7 +231,8 @@ const Header = () => {
                     width: "100%",
                     borderRadius: "4px",
                     border: "none",
-                    height: "3.5em",
+
+                    height: "2.7em",
                   }}
                 />
               </div>

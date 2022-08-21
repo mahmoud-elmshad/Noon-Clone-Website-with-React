@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
-
 
 
 export default function CartCard(props) {
