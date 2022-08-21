@@ -9,12 +9,14 @@ import Gallery from './ItemCarsoul';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import addProduct from './../../Redux/action/action';
+import Swal from 'sweetalert2';
+import RatingReview from '../Rating/RatingReview';
+import { contains } from '@firebase/util';
 
 
 const Details = () => {
     const queryParams = new URLSearchParams(window.location.search)
     const id = queryParams.get("prdID")
-    // console.log(id)
     const [option] = useState([
         {
             text: '1',
@@ -30,49 +32,47 @@ const Details = () => {
         },
     ]);
     const [product, setPrd] = useState([]);
-    const data = useSelector((state) => state.product)
-    let [dataPrd, setDataPrd] = useState(data)
 
     const addToCart = () => {
-        setDataPrd(dataPrd.concat(id))
         window.localStorage.setItem(id, JSON.stringify(product))
-        console.log(product)
-        console.log(dataPrd)
-
+        Swal.fire(
+            'Good choice!',
+            `${product.name} added to cart!`,
+            'success'
+        )
     }
-    const dispatch = useDispatch();
-    dispatch(addProduct(dataPrd))
-
-
-
     useEffect(() => {
         getProduct();
     }, [])
     const getProduct = async () => {
         const dataSnap = await DetailsService.getPrd(`${id}`)
         setPrd(dataSnap.data())
-        // console.log(dataSnap.id);
     }
+ 
+    
+
+
+
     return (
         <Container className='mb-5'>
             <Row className='my-3'>
                 <Col sm={4}>
-                    <img style={{ width: '100%' }} src={product.img} />
+                    <img style={{ width: '40vh' }} src={product.img} />
                 </Col>
 
                 <Col sm={4}>
                     <div className='my-1' style={{ fontSize: 19, fontWeight: 600 }}>{product.name}</div>
-                    <div className='my-1'>Description .......
+                    <div className='my-1' style={{ display: '-webkit-box', WebkitLineClamp: '2', overflow: 'hidden', textOverflow: 'ellipsis', WebkitBoxOrient: 'vertical' }}>{product.description}
                     </div>
                     <div className='my-1'>
-                        <span style={{ fontSize: '0.8em' }}> <span style={{ opacity: '60%' }}>Model Number : GN2916</span> |  <span style={{ background: '#38AE04', color: 'white' }}> 4.8 <img alt="starFilled" height="11" src="https://z.nooncdn.com/s/app/com/noon/design-system/simpleicons/star-filled.svg" width="11"></img></span>Rating</span>
+                        <span style={{ fontSize: '0.8em' }}> <span style={{ opacity: '60%' }}>Model Number : {product.mNumber}</span> |  <span style={{ background: '#38AE04', color: 'white' }}> {(product.rating/product.numberOfRatings).toFixed(1)} <img alt="starFilled" height="11" src="https://z.nooncdn.com/s/app/com/noon/design-system/simpleicons/star-filled.svg" width="11"></img></span>Rating</span>
                     </div>
-                    <div className='my-1'>Was :&nbsp;&nbsp;&nbsp;&nbsp; <span className='text-decoration-line-through' style={{ opacity: '60%', fontSize: 18, fontWeight: 600 }}>EGP 200</span> </div>
-                    <div className='my-1'>Now : &nbsp;&nbsp;&nbsp;&nbsp;<b style={{ fontSize: 19, fontWeight: 700 }}>{product.price} EGP</b> <span style={{ opacity: '60%', fontSize: 12, fontWeight: 400 }}>Inclusive of VAT</span></div>
-                    <div className='my-1'>Saving : {product.price - 10}</div>
+                    <div className='my-1'>Was :&nbsp;&nbsp;&nbsp;&nbsp; <span className='text-decoration-line-through' style={{ opacity: '60%', fontSize: 18, fontWeight: 600 }}>{product.price}</span> </div>
+                    <div className='my-1'>Now : &nbsp;&nbsp;&nbsp;&nbsp;<b style={{ fontSize: 19, fontWeight: 700 }}>{Math.ceil(product.price - (product.price * (product.discount / 100)))} EGP</b> <span style={{ opacity: '60%', fontSize: 12, fontWeight: 400 }}>Inclusive of VAT</span></div>
+                    <div className='my-1'>Saving : {Math.floor(product.price * (product.discount / 100))}</div>
                     <div className='container my-3' style={{ backgroundColor: 'rgb(252, 251, 245)', fontSize: 13 }}>
                         <img src='https://z.nooncdn.com/s/app/com/noon/icons/emi.svg' />
-                        <span>Monthly payment plans from EGP 384 </span><span><a href='#'>View more details</a></span>
+                        <span>Monthly payment plans from EGP {Math.ceil((product.price - (product.price * (product.discount / 100))) / 12)} </span><span><a href='#'>View more details</a></span>
                     </div>
                     <div className='my-3'><img style={{ width: '100%' }} src='https://k.nooncdn.com/cms/pages/20220419/7e4b7c8e9d1f4d6dc041e183e07ff1e1/en_pdp-01.png' alt='none' /></div>
                     <div className='my-3 d-flex justify-content-between' style={{ backgroundColor: '#F5F7FE' }}>
@@ -93,22 +93,28 @@ const Details = () => {
                     </div>
                     <div>
                         <Row className='my-3'>
-                            <Col sm={3}>
+                            <Col sm={2}>
                                 <div className='my-2 fw-bold'>Quantity</div>
-                                <CDBSelect style={{ width: '70%' }} options={option} selected={option[0].text} />
+                                <CDBSelect style={{ width: '100%', height: '2rem' }} options={option} selected={option[0].text} />
                             </Col>
-                            <Col sm={9}>
-                                <CDBBtn onClick={() => addToCart()} style={{ width: '100%', marginTop: '2rem', backgroundColor: "rgb(43, 76, 215)" }}>Add To Cart</CDBBtn>
+                            <Col sm={10}>
+                                <button onClick={() => addToCart()} style={{ width: '100%', marginTop: '2rem', backgroundColor: "rgb(43, 76, 215)" }} type="button" className="btn btn-primary">Add To Cart</button>
                             </Col>
                         </Row>
                     </div>
-                    <div className='my-2' style={{ opacity: '60%', fontSize: 17 }}>Size :</div>
+                    <div className='my-2' style={{ opacity: '60%', fontSize: 17 }}>Storage :</div>
                     <div>
-                        <CDBSelect style={{ width: '100%' }} options={option} selected="XL" />
+                        <select style={{ width: '100%', height: '2rem' }}>
+                            {product.storage != undefined && product.storage.map((storage, index) =>
+                                <option key={index}>{storage}</option>)}
+                        </select>
                     </div>
                     <div className='my-2' style={{ opacity: '60%', fontSize: 17 }}>Color:</div>
                     <div>
-                        <CDBSelect style={{ width: '100%' }} options={option} selected="RED" />
+                        <select style={{ width: '100%', height: '2rem' }}>
+                            {product.colors != undefined && product.colors.map((color, index) =>
+                                <option key={index}>{color}</option>)}
+                        </select>
                     </div>
                     <hr className='my-5' />
                 </Col>
@@ -207,21 +213,17 @@ const Details = () => {
                 <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div className='Container fw-bold my-2'>Highlights</div>
                     <ul>
-                        <li>
-                            Crafted Elegantly, It Lend The Perfect Touch Of Fashion Vibe To Your Overall Look
-                        </li>
-                        <li>
-                            Designed To Accentuate Your Style Statement
-                        </li>
-                        <li>
-                            Ideal For Regular Use
-                        </li>
+                        {product.highlights != undefined && product.highlights.map((text, index) =>
+                            <li key={index}>
+                                {text}
+                            </li>
+                        )}
                     </ul>
                     <div className='Container fw-bold my-2'>
                         Overview
                     </div>
                     <div >
-                        Founded in 2003, DEFACTO is today one of the most popular fashion brands in Turkey and around the world with more than 500 stores. It is positioned as a pioneering brand of fashion throughout the Mediterranean world
+                        {product.overview}
                     </div>
                 </div>
                 <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -300,32 +302,32 @@ const Details = () => {
                         <div className='row'>
 
                             <div className='col-4' style={{ paddingRight: '2em' }}>
-                                <div className="d-flex justify-content-between">
+                                <div className="d-flex justify-content-center">
 
 
                                     <div className="content text-center">
 
                                         <div className="ratings">
                                             <div style={{ fontSize: 19, fontWeight: 'bold' }}>Overall Rating</div>
-                                            <span className="product-rating" style={{ color: '#F2994A', fontSize: 24, fontWeight: 'bold' }}>4.6</span>
-                                            <div className="stars" style={{ color: '#F2994A' }}>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star mx-1"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star mx-1"></i>
-                                                <i className="fa fa-star"></i>
+                                            <span className="product-rating" style={{ color: '#F2994A', fontSize: 24, fontWeight: 'bold' }}>{(product.rating/product.numberOfRatings).toFixed(1)}</span>
+                                            <div className="">
+                                            
+                                                <RatingReview
+                                                    rating={product.rating}
+                                                    numberOfRating={product.numberOfRatings}
+                                                />
                                             </div>
 
                                             <div className="rating-text">
 
-                                                <span style={{ opacity: '60%' }}>Based on 1 rating</span>
+                                                <span style={{ opacity: '60%' }}>Based on {product.numberOfRatings} ratings</span>
 
                                             </div>
 
                                         </div>
 
                                     </div>
-
+                                    {/* 
                                     <div className='col-6'>
                                         <div>5 <i style={{ color: '#F2994A' }} className="fa fa-star"></i></div>
                                         <span><ProgressBar style={{ height: '4px' }} variant="warning" now={100} /></span><span> (1)</span>
@@ -338,11 +340,11 @@ const Details = () => {
                                         <div>0 <i style={{ color: '#F2994A' }} className="fa fa-star"></i></div>
                                         <span><ProgressBar style={{ height: '4px' }} variant="warning" now={0} /></span><span> (0)</span>
 
-                                    </div>
+                                    </div> */}
 
                                 </div>
                                 <div className='my-3 py-2 px-2 text-align' style={{ width: '100%', backgroundColor: '#F4F7FF' }}>
-                                    There are no customer reviews and 1 customer rating.
+                                    There are no customer reviews and {product.numberOfRatings} customer rating.
 
                                 </div>
                             </div>

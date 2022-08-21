@@ -218,6 +218,7 @@ const Header = () => {
                   </Modal>
                 </div>
               </div>
+
               <div className="flex-grow-1 order-sm-2 order-3">
                 <input
                   className="w-100"
@@ -235,6 +236,7 @@ const Header = () => {
               </div>
               <div className="d-flex align-items-center order-sm-3 order-2">
                 <button className="btn">العربية</button>
+
                 <span>|</span>
                 {profilename ? (
                   <>

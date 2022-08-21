@@ -20,8 +20,6 @@ import { Link } from "react-router-dom";
 
 export default function DealStyleVertical() {
   const [products, setPrds] = useState([]);
-  const [productSnap, setPrdSnap] = useState("");
-  const [option, setOptions] = useState([]);
 
   useEffect(() => {
     getProduct();
@@ -29,15 +27,8 @@ export default function DealStyleVertical() {
   const getProduct = async () => {
     const dataSnap = await DetailsService.getAllPrd();
     setPrds(dataSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    // setPrdSnap(dataSnap.id)
   };
-  // console.log(productSnap);
-  console.log(products);
-  products.map((value, key) => {
-    console.log(value.name);
-    option.push(value.name);
-  });
-  console.log(option);
+
 
   return (
     <>
@@ -69,26 +60,21 @@ export default function DealStyleVertical() {
         modules={[Pagination, Navigation]}
         className="mySwiper my-5"
       >
-        {products.map((value, key) => {
+        {products.map((value, index) => {
           return (
             <>
               <SwiperSlide key={value.id}>
                 <DealStyleVerticalComp
-                  imgurl="https://z.nooncdn.com/products/tr:n-t_240/v1655474955/N25937075A_1.jpg"
-                  price="9000"
-                  oldPrice="10000"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <DealStyleVerticalComp
-                  // name={product.name}
-                  // imgurl={product.img}
-                  // price={product.price}
+                  key={value.id}
+                  name={value.name}
                   imgurl={value.img}
-                  price={value.price}
+                  price={Math.ceil(value.price - (value.price*(value.discount/100)))}
                   description={value.description}
                   id={value.id}
-                  oldPrice="12000"
+                  discount={value.discount}
+                  oldPrice={value.price}
+                  overallRating={(value.rating/value.numberOfRatings).toFixed(1)}
+                  numberOfRatings={value.numberOfRatings}
                 />
               </SwiperSlide>
             </>

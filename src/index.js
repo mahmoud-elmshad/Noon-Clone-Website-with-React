@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes } from "react-router-dom";
-
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -12,10 +11,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import Provider from "./../node_modules/react-redux/es/components/Provider";
 import store from "./Redux/store";
 import { AuthProvider } from "./Auth";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

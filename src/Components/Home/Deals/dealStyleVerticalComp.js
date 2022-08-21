@@ -8,36 +8,20 @@ import { useSelector, useDispatch } from "react-redux";
 import getProduct from "./../../../Redux/action/action";
 
 export default function DealStyleVerticalComp(props) {
-  // const prds = useSelector((state) => state.product)
-  // const [product, setPrd] = useState(prds)
+
   const navigate = useNavigate();
-
-  // const goDetails = () => {
-  //   setPrd(props)
-  //   if(Object.keys(prds).length ===0){
-
-  //     console.log("not yet");
-  //   }else{
-  //     navigate('/details')
-
-  //   }
-  // }
-  // const dispatch = useDispatch()
-  // dispatch(getProduct(product))
-
   const goDetails = () => {
     navigate(`/details?prdID=${props.id}`);
   };
   return (
     <>
-      {/* <div className=" mx-1" style={{ width: "14%" }}> */}
-
+      {/* <div className=" mx-1" style={{ height: "50%" }}> */}
       <div onClick={goDetails}>
         <Card style={{ border: "none" }}>
           <Card.Img
             variant="top"
             src={props.imgurl}
-            // style={{ height: 400 }}
+          // style={{ width: '20vh' }}
           />
           <Card.Body>
             <Card.Text
@@ -53,16 +37,6 @@ export default function DealStyleVerticalComp(props) {
             </Card.Text>
             <Card.Text>
               <div className="fw-bold fs-5">
-                <NumberFormat
-                  value={props.price}
-                  // className="foo"
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  prefix={"EGP "}
-                />
-              </div>
-              {/* <div className="d-flex"> */}
-              <div className="fw-semibold fs-6 text-decoration-line-through me-3">
                 <NumberFormat
                   value={props.price}
                   // className="foo"
@@ -107,7 +81,7 @@ export default function DealStyleVerticalComp(props) {
                 </div>
                 <div className="fw-semibold" style={{ color: "#F5A523" }}>
                   <AiFillStar />
-                  4.8 (20)
+                  {props.overallRating} ({props.numberOfRatings})
                 </div>
               </div>
             </Card.Text>
