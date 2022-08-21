@@ -3,14 +3,26 @@ import { PayPalButtons } from '@paypal/react-paypal-js'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
+import UserService from '../../services/UserService';
+import { useAuth } from '../../Auth';
 
 const PayPalCheckOutButton = (props) => {
+    const { user } = useAuth();
     const [value, setValue] = useState(props.value)
-
+    const [arrKeys, setArrKeys] = useState()
 
     useEffect(() => {
         setValue(props.value)
+        const keys = [];
         console.log(props.value)
+        for (var i = 0; i < localStorage.length; i++) {
+            if (!localStorage.key(i).includes('__paypal_storage__')) {
+                keys.push(localStorage.key(i))
+            }
+
+
+        }
+        setArrKeys({ keys })
     }, [props.value])
 
     const [paidFor, setPaidFor] = useState(false);
@@ -19,7 +31,12 @@ const PayPalCheckOutButton = (props) => {
         setPaidFor(true)
 
     }
+
+
+
+
     if (paidFor) {
+        UserService.updateUserCart(user.uid, arrKeys)
         Swal.fire(
             'Good choice!',
             'Product purchase completed successfully',
@@ -33,7 +50,7 @@ const PayPalCheckOutButton = (props) => {
                 }
             }
         }
-     
+
 
     }
     if (error) {

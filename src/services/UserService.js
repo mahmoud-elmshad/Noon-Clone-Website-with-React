@@ -1,5 +1,5 @@
 import db from "../firebase";
-import { getDoc, updateDoc, doc, setDoc } from "firebase/firestore";
+import { getDoc, updateDoc, arrayUnion, doc, setDoc } from "firebase/firestore";
 
 class UserService {
   addCollection = (id, email, password) => {
@@ -26,6 +26,14 @@ class UserService {
       mobileaway: mobile,
     });
   };
+
+  updateUserCart = async (id , prdid) => {
+    return await updateDoc(doc(db, "Users", id), {
+      orders: arrayUnion(prdid)
+
+    });
+  };
+
   getUser = (id) => {
     return getDoc(doc(db, "Users", id));
   };
