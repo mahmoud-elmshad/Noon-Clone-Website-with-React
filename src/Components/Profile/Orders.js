@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from './../../Auth';
+import { useAuth } from "./../../Auth";
 import {
-
   BrowserRouter as Router,
   Switch,
   Route,
@@ -13,7 +12,6 @@ import {
 import UserService from "../../services/UserService";
 import DetailsService from "../../services/details.services";
 export default function Orders() {
-
   const { logOut, user, logIn, signUp } = useAuth();
   const [order, setOrder] = useState();
   const [allPrdList, setAllPrdList] = useState([]);
@@ -27,24 +25,24 @@ export default function Orders() {
     console.log(docSnap.exists());
     if (docSnap.exists()) {
       console.log(docSnap.data().orders);
-      setOrder(docSnap.data().orders)
+      setOrder(docSnap.data().orders);
     }
   };
 
   const getProducts = async () => {
-    var firstLoop = []
-    var productList = []
+    var firstLoop = [];
+    var productList = [];
     if (order != undefined) {
-      order.map((items) => items.keys.map((value) => firstLoop.push(value))
-      )}
-    for (var i = 0; i < firstLoop.length; i++) {
-      const product = await DetailsService.getPrd(firstLoop[i])
-      console.log(product.data())
-      productList.push(product.data())
+      order.map((items) => items.keys.map((value) => firstLoop.push(value)));
     }
-    console.log(productList)
-  }
-  getProducts()
+    for (var i = 0; i < firstLoop.length; i++) {
+      const product = await DetailsService.getPrd(firstLoop[i]);
+      console.log(product.data());
+      productList.push(product.data());
+    }
+    console.log(productList);
+  };
+  getProducts();
 
   return (
     <>
@@ -66,7 +64,7 @@ export default function Orders() {
         </div>
       </div> */}
       <div>
-        {productList.map((value) => {
+        {/* {productList.map((value) => {
           console.log(value);
           return (
             <>
@@ -75,7 +73,7 @@ export default function Orders() {
           )
         }
 
-        )}
+        )} */}
       </div>
     </>
   );
