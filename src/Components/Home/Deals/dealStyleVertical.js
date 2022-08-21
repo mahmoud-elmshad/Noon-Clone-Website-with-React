@@ -4,20 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import DetailsService from "../../../services/details.services";
 
-import { Link } from "react-router-dom";
-
-// export default function DealStyleVertical() {
-//   const [product, setProduct] = useState([]);
-//   useEffect(() => {
-//     getProduct();
-//   }, []);
-
-//   async function getProduct() {
-//     const productSnap = await DetailsService.getPrd("gPALbo3FfUqOV6TQhXyN");
-//     setProduct(productSnap.data());
-//   }
-//   console.log(product);
-
 export default function DealStyleVertical() {
   const [products, setPrds] = useState([]);
 

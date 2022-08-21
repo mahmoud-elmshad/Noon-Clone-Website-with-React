@@ -1,0 +1,20 @@
+.star{
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(337deg) brightness(102%) contrast(102%);
+}
+.rating{
+    background: rgb(56, 174, 4);
+    color: rgb(255, 255, 255);
+    margin-right: 9px;
+    margin-left: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 0;
+    gap: 0.5em;
+    padding: 0.3em 0.4em;
+}

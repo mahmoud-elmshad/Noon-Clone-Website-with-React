@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeCarousel from "./Carousel/homeCarousel";
 import HomeCircle from "./Circle/homeCircle";
 import AdStyleOne from "./Ads/adStyleOne";
@@ -8,8 +8,11 @@ import AdStyleTwo from "./Ads/adStyleTwo";
 import AdStyleThree from "./Ads/adStyleThree";
 import AdStyleFour from "./Ads/adStyleFour";
 import Brands from "./Brands/brands";
+import DetailsServices from "../../services/details.services";
 
 export default function Home() {
+
+
   var caturls = [
     "https://k.nooncdn.com/cms/pages/20211206/8908ea4092c77b5ac68851cf40251c4b/en_cat-19.png",
     "https://k.nooncdn.com/cms/pages/20211206/8908ea4092c77b5ac68851cf40251c4b/en_cat-23.png",

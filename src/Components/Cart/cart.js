@@ -1,72 +1,59 @@
 import React, { useState, useEffect } from "react";
 import CartCard from "./cartCard";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import NumberFormat from "react-number-format";
-import { useSelector } from 'react-redux';
-import DetailsService from "../../services/details.services";
-import { useDispatch } from 'react-redux';
-import addProduct from './../../Redux/action/action';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PayPalCheckOutButton from "../PayPal/PayPalCheckOutButton";
 
 export default function Cart() {
   const navigate = useNavigate();
-  let [dataPrd, setDataPrd] = useState([])
+  let [dataPrd, setDataPrd] = useState([]);
 
   useEffect(() => {
     const cartItems = [];
     for (const key in localStorage) {
       if (localStorage.hasOwnProperty(key)) {
-        if (key.includes('__paypal_storage__')) {
-
+        if (key.includes("__paypal_storage__")) {
         } else {
-          cartItems.push({ ...JSON.parse(localStorage.getItem(key)), key })
-
+          cartItems.push({ ...JSON.parse(localStorage.getItem(key)), key });
         }
-
       }
-    };
+    }
     // cartItems.filter((item)=>item)
-    console.log(cartItems)
-    setDataPrd(cartItems)
-
-
-  }, [])
+    console.log(cartItems);
+    setDataPrd(cartItems);
+  }, []);
 
   const deleteCard = (id) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You are going to remove this product!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Removed!',
-          'Your product has been removed.',
-          'success'
-        )
+        Swal.fire("Removed!", "Your product has been removed.", "success");
         localStorage.removeItem(id);
-        setDataPrd(dataPrd.filter((value) => value.key != id))
+        setDataPrd(dataPrd.filter((value) => value.key != id));
       }
-    })
-
-  }
-   function  findSumUsingMap() {
+    });
+  };
+  function findSumUsingMap() {
     let total = 0;
-      dataPrd.map(({ price, discount }) => total = total + (price - (price * (discount / 100))))
-      return Math.ceil(total);
+    dataPrd.map(
+      ({ price, discount }) =>
+        (total = total + (price - price * (discount / 100)))
+    );
+    return Math.ceil(total);
   }
-  const totalPrice = findSumUsingMap()
+  const totalPrice = findSumUsingMap();
 
   const goHome = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
   // const payPalProduct = {
   //   description: 'Noon Shopping',
   //   price: ((totalPrice / 19.14).toFixed(1))
@@ -74,8 +61,6 @@ export default function Cart() {
 
   return (
     <>
-
-
       <div style={{ backgroundColor: "#F7F7FA" }}>
         <div className="container py-5">
           {/* <div className="col-1"></div> */}
@@ -89,21 +74,22 @@ export default function Cart() {
                   className="img-fluid my-3 w-100"
                 />
               </div>
-              {dataPrd.length > 0 && dataPrd.map((value) => {
 
-                return (
-                  <CartCard
-                    key={value.key}
-                    delete={deleteCard}
-                    imgurl={value.img}
-                    prdBrand={value.brand}
-                    title={value.name}
-                    trader="noon"
-                    id={value.key}
-                  />
-                )
+              {dataPrd.length > 0 &&
+                dataPrd.map((value) => {
+                  return (
+                    <CartCard
+                      key={value.key}
+                      delete={deleteCard}
+                      imgurl={value.img}
+                      prdBrand={value.brand}
+                      title={value.name}
+                      trader="noon"
+                      id={value.key}
+                    />
+                  );
+                })}
 
-              })}
               <button
                 className="btn btn-outline-primary text-primary"
                 style={{ backgroundColor: "white" }}
@@ -169,9 +155,8 @@ export default function Cart() {
               </div>
               <div className="paypal-button-container">
                 <PayPalCheckOutButton
-                  description = {'Noon Shopping'}
-                  value = {((totalPrice / 19.14).toFixed(1))}
-
+                  description={"Noon Shopping"}
+                  value={(totalPrice / 19.14).toFixed(1)}
                 />
               </div>
             </div>
@@ -180,11 +165,6 @@ export default function Cart() {
           {/* <div className="row my-5"></div> */}
         </div>
       </div>
-
-
-
-
-
     </>
   );
 }

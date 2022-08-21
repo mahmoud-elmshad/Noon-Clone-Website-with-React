@@ -1,7 +1,6 @@
 import "./side-bar.css";
 import Cards from "../Cards/Cards";
 import React, { useState } from 'react';
-import Gallery from "../Details/ItemCarsoul"
 
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);

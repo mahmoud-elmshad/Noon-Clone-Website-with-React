@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { CDBSelect, CDBContainer, CDBBtn } from 'cdbreact';
+import { CDBSelect } from 'cdbreact';
 import DetailsService from '../../services/details.services'
-import { Link, useNavigate } from 'react-router-dom';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import Gallery from './ItemCarsoul';
-// import { useSearchParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import addProduct from './../../Redux/action/action';
 import Swal from 'sweetalert2';
 import RatingReview from '../Rating/RatingReview';
-import { contains } from '@firebase/util';
+import './details.css'
 
 
 const Details = () => {
@@ -57,7 +51,7 @@ const Details = () => {
         <Container className='mb-5'>
             <Row className='my-3'>
                 <Col sm={4}>
-                    <img style={{ width: '40vh' }} src={product.img} />
+                    <img style={{ width: '100%' }} src={product.img} />
                 </Col>
 
                 <Col sm={4}>
@@ -65,7 +59,7 @@ const Details = () => {
                     <div className='my-1' style={{ display: '-webkit-box', WebkitLineClamp: '2', overflow: 'hidden', textOverflow: 'ellipsis', WebkitBoxOrient: 'vertical' }}>{product.description}
                     </div>
                     <div className='my-1'>
-                        <span style={{ fontSize: '0.8em' }}> <span style={{ opacity: '60%' }}>Model Number : {product.mNumber}</span> |  <span style={{ background: '#38AE04', color: 'white' }}> {(product.rating/product.numberOfRatings).toFixed(1)} <img alt="starFilled" height="11" src="https://z.nooncdn.com/s/app/com/noon/design-system/simpleicons/star-filled.svg" width="11"></img></span>Rating</span>
+                        <span style={{ fontSize: '0.8em' }}> <span style={{ opacity: '60%' }}>Model Number : {product.mNumber}</span> |  <span className='rating'> {(product.rating/product.numberOfRatings).toFixed(1)} <img className='star' alt="starFilled" height="11" src="https://f.nooncdn.com/s/app/com/noon/design-system/simpleicons/star-filled.svg" width="11"/></span>{product.numberOfRatings} Ratings</span>
                     </div>
                     <div className='my-1'>Was :&nbsp;&nbsp;&nbsp;&nbsp; <span className='text-decoration-line-through' style={{ opacity: '60%', fontSize: 18, fontWeight: 600 }}>{product.price}</span> </div>
                     <div className='my-1'>Now : &nbsp;&nbsp;&nbsp;&nbsp;<b style={{ fontSize: 19, fontWeight: 700 }}>{Math.ceil(product.price - (product.price * (product.discount / 100)))} EGP</b> <span style={{ opacity: '60%', fontSize: 12, fontWeight: 400 }}>Inclusive of VAT</span></div>

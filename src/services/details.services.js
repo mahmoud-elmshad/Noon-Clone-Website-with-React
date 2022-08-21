@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  setDoc,
 } from "firebase/firestore";
 
 // const prdCollection = collection(

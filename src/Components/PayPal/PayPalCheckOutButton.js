@@ -2,6 +2,7 @@ import React from 'react'
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const PayPalCheckOutButton = (props) => {
     const [value, setValue] = useState(props.value)
@@ -19,10 +20,28 @@ const PayPalCheckOutButton = (props) => {
 
     }
     if (paidFor) {
-        alert('Thank You For your Purchase')
+        Swal.fire(
+            'Good choice!',
+            'Product purchase completed successfully',
+            'success'
+        ).then(() => window.location.reload())
+        for (const key in localStorage) {
+            if (localStorage.hasOwnProperty(key)) {
+                if (key.includes("__paypal_storage__")) {
+                } else {
+                    localStorage.removeItem(key)
+                }
+            }
+        }
+     
+
     }
     if (error) {
-        alert(error)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+        })
     }
 
     return (

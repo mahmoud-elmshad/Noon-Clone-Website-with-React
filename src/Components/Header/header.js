@@ -1,213 +1,477 @@
-import React, { useState } from "react";
-import { Modal, show, Button } from "react-bootstrap";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
-// import './header.css';
-// import myForm from './../Login/form';
+import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import Information from "./Information";
+import { useAuth } from "./../../Auth";
+import UserService from "../../services/UserService";
+
 
 const Header = () => {
+  const { logOut, user, logIn, signUp } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [profilename, setProfileName] = useState("");
+  const [address, setAddress] = useState(null);
+  const [addressaway, setAddressAway] = useState(null);
+
+  const [userinfo, setUserInfo] = useState({});
+  const navigate = useNavigate();
+
+  const userData = async () => {
+    const docSnap = await UserService.getUser(`${user.uid}`);
+    console.log(user.uid);
+    console.log(docSnap.exists());
+    if (docSnap.exists()) {
+      console.log(docSnap.data());
+      setProfileName(docSnap.data().firstname);
+      setAddress(`${docSnap.data().city},${docSnap.data().street}`);
+      setAddressAway(`${docSnap.data().cityaway},${docSnap.data().streetaway}`);
+      console.log(address);
+    }
+  };
+  const handleChange = () => {};
+  if (user) {
+    userData();
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      await logIn(email, password);
+      navigate("/");
+      handleClose();
+    } catch (error) {
+      setError(error.message);
+      console.log(error);
+    }
+  };
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+
+    try {
+      await logOut();
+      navigate("/");
+      setProfileName(false);
+      setAddress(null);
+      setAddressAway(null);
+      console.log(user.uid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [show, setShow] = useState(false);
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    setShowSignUp(false);
+    setShowMap(false);
+  };
   const handleClose = () => setShow(false);
+
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  const handleShowSignUp = () => {
+    setShowSignUp(false);
+    setShow(false);
+    setShowMap(false);
+  };
+  const handleCloseSignUp = () => setShowSignUp(false);
 
   const [showMap, setShowMap] = useState(false);
 
-  const handleShowMap = () => setShowMap(true);
+  const handleShowMap = () => {
+    setShowMap(true);
+    setShow(false);
+    setShowSignUp(false);
+  };
   const handleCloseMap = () => setShowMap(false);
+  function handleAddInfo() {
+    if (!profilename || !user) {
+      navigate("/login");
+    } else {
+      navigate("/info");
+    }
+  }
+  function handleAddAddress() {
+    navigate("/newinfo");
+    handleCloseMap();
+  }
+  const [home, setHome] = useState(true);
+  function handleHome() {
+    setHome(true);
+    handleCloseMap();
+  }
+  function handleAway() {
+    setHome(false);
+    handleCloseMap();
+  }
 
   //  GoogleMap
 
   return (
     <>
       <>
-        <Navbar
+        <nav
+          class="navbar navbar-expand-lg h-auto"
           style={{
             maxWidth: "100%",
             backgroundColor: "#FEEE00",
-            height: "6em",
-            margin: "0",
+            // height: "6em",
           }}
         >
-          <Container fluid>
-            <div
-              className="col-2 justify-content-start mx-0 "
-              style={{ display: "flex" }}
-            >
-              <div className="row">
+          <div class="container-fluid">
+            <div className="d-flex justify-content-center align-items-center w-100 flex-wrap">
+              <div className="d-flex align-items-center order-md-1 order-1">
                 <img
-                  src="https://z.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg"
-                  style={{ width: "50%", height: "50%" }}
-                  className="mx-0 my-auto"
+                  src="https://f.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg"
+                  className="me-sm-3 me-2 img-fluid"
+                  style={{ height: "24px" }}
                   alt=""
+                  onClick={() => {
+                    navigate("/");
+                  }}
                 />
-                <img
-                  src="https://z.nooncdn.com/s/app/com/common/images/flags/eg.svg"
-                  style={{ width: "30%", height: "30%" }}
-                  className="mx-0 px-0 my-auto"
-                  alt=""
-                />
-                <div
-                  style={{ width: "50px", marginTop: "5%" }}
-                  className="mx-0 px-0"
-                >
-                  <p style={{ fontSize: "10px", float: "left", width: "15px" }}>
-                    DeliverTo
-                    <br />
-                    <span>Cairo</span>
-                  </p>
-                  <button
-                    className="btn mx-0 px-0"
-                    style={{ float: "right", width: "5px" }}
-                    onClick={handleShowMap}
-                  >
-                    <i className="fa fa-caret-down" aria-hidden="true"></i>
-                  </button>
-                  <Modal show={showMap} onHide={handleCloseMap}>
+
+                <div className="d-flex align-items-center">
+                  {/* <img
+                    src="https://z.nooncdn.com/s/app/com/common/images/flags/eg.svg"
+                    // style={{ width: "30%", height: "30%" }}
+                    className="me-2 img-fluid"
+                    alt=""
+                  /> */}
+                  <div className="d-flex ">
+                    <button
+                      className="btn fs-6 d-flex flex-column "
+                      onClick={handleShowMap}
+                      disabled={
+                        address == null || address == "undefined,undefined"
+                      }
+                      style={{ border: "none" }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="me-2 ">Deliver to</div>
+
+                        <i className="fa fa-caret-down" aria-hidden="true"></i>
+                      </div>
+                      {address != null && address != "undefined,undefined" ? (
+                        <>
+                          {home ? (
+                            <div>{address}</div>
+                          ) : (
+                            <div>{addressaway}</div>
+                          )}
+                        </>
+                      ) : null}
+                    </button>
+                  </div>
+
+                  <Modal show={showMap} onHide={handleCloseMap} size="lg">
                     <Modal.Header closeButton>
                       <Modal.Title></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <iframe
-                        src="https://maps.google.com/maps?q=cairo&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-                        width="450"
-                        height="400"
-                        allowfullscreen
-                      ></iframe>
+                      {/* <Location /> */}
+                      {address == null && address == "undefined,undefined" ? (
+                        <Information />
+                      ) : addressaway == null ||
+                        addressaway == "undefined,undefined" ? (
+                        <>
+                          <div>
+                            Your Current Address is "{address}" Click on link
+                            below to Add New Address:
+                          </div>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-block my-3"
+                            onClick={handleAddAddress}
+                          >
+                            ADD ADDRESS
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-block my-3"
+                            onClick={handleHome}
+                          >
+                            {address}
+                          </button>
+                          <br />
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-block my-3"
+                            onClick={handleAway}
+                          >
+                            {addressaway}
+                          </button>
+                        </>
+                      )}
                     </Modal.Body>
                   </Modal>
                 </div>
               </div>
-            </div>
-            <div className="col-8 d-flex justify-content-center mx-0 ">
-              <input
-                type="search"
-                id="gsearch"
-                name="gsearch"
-                placeholder=" What are you Looking for?"
-                style={{
-                  width: "100%",
-                  borderRadius: "4px",
-                  border: "none",
-                  height: "3.5em",
-                }}
-              />
-            </div>
 
-            <div
-              className="d-flex justify-content-end"
-              style={{ width: "100%", display: "inline", alignContent: "end" }}
-            >
-              <button className="btn mx-0 px-0">
-                {" "}
-                العربية <span>|</span>
-              </button>
+              <div className="flex-grow-1 order-sm-2 order-3">
+                <input
+                  className="w-100"
+                  type="search"
+                  id="gsearch"
+                  name="gsearch"
+                  placeholder=" What are you looking for?"
+                  style={{
+                    width: "100%",
+                    borderRadius: "4px",
+                    border: "none",
+                    height: "2.7em",
+                  }}
+                />
+              </div>
+              <div className="d-flex align-items-center order-sm-3 order-2">
+                <button className="btn">العربية</button>
 
-              <button className="btn mx-0 px-0" onClick={handleShow}>
-                {" "}
-                sign in<i className="fa fa-user-o" aria-hidden="true"></i>{" "}
                 <span>|</span>
-              </button>
-              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <form>
-                    <div style={{ textAlign: "center" }}>
-                      <h4>welcome Back !</h4>
-                      <h3> Sign in to your account</h3>
-                      <p>
-                        Don't have an account? <a href="#">Sign up</a>
-                      </p>
+                {profilename ? (
+                  <>
+                    <div class="btn-group dropdown-center">
+                      <button
+                        type="button"
+                        class="btn  dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        {profilename}
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <Link
+                            class="dropdown-item active"
+                            to="profilebar/orders"
+                          >
+                            Orders
+                          </Link>
+                        </li>
+                        <li>
+                          <Link class="dropdown-item" to="profilebar/address">
+                            Address
+                          </Link>
+                        </li>
+                        <li>
+                          <Link class="dropdown-item" to="profilebar/profile">
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                          <Link
+                            onClick={handleLogout}
+                            class="dropdown-item"
+                            to=""
+                          >
+                            Sign Out
+                          </Link>
+                        </li>
+                      </ul>
                     </div>
+                  </>
+                ) : null}
 
-                    <div className="form-outline mb-4">
-                      <label className="form-label" for="form2Example1">
-                        Email address
-                      </label>
-                      <input
-                        type="email"
-                        id="form2Example1"
-                        className="form-control"
-                      />
-                    </div>
+                {/* {!profilename && user ? (
+                  <>
+                    <button className="btn" onClick={handleAddInfo}>
+                      Add Info
+                      <i className="fa fa-user-o" aria-hidden="true"></i>
+                    </button>
+                  </>
+                ) : null} */}
 
-                    <div className="form-outline mb-4">
-                      <label className="form-label" for="form2Example2">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        id="form2Example2"
-                        className="form-control"
-                      />
-                    </div>
+                {!profilename || !user ? (
+                  <>
+                    <button className="btn" onClick={handleShow}>
+                      sign in<i className="fa fa-user-o" aria-hidden="true"></i>
+                    </button>
+                  </>
+                ) : null}
 
-                    <div className="col">
-                      <a href="#!">Forgot password?</a>
+                <span>|</span>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title></Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    {/* <Login /> */}
+                    <div className="w-100">
+                      <form
+                        className="w-75 mx-auto my-3"
+                        onSubmit={handleLogin}
+                      >
+                        <div style={{ textAlign: "center" }}>
+                          <h4>Welcome back!</h4>
+                          <h3>Sign in to your account</h3>
+                          <p>
+                            Don't have an account?{" "}
+                            <Link to="signup" onClick={handleShowSignUp}>
+                              Sign Up
+                            </Link>
+                          </p>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="email">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            id="emaillogin"
+                            name="email"
+                            // value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="password">
+                            Password
+                          </label>
+                          <input
+                            type="password"
+                            id="passwordlogin"
+                            name="password"
+                            // value={password}
+                            onChange={(e) => {
+                              setPassword(e.target.value);
+                            }}
+                            class="form-control"
+                          />
+                        </div>
+                        <div>
+                          <button
+                            type="submit"
+                            class="btn btn-primary btn-block mb-4"
+                          >
+                            Sign in
+                          </button>
+                        </div>
+
+                        <div class="col">
+                          <a href="#!">Forgot your password?</a>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </Modal.Body>
-                <Modal.Footer>
-                  <button type="button" className="btn btn-primary btn-block mb-4">
-                    Sign in
+                  </Modal.Body>
+                </Modal>
+                <Modal show={showSignUp} onHide={handleCloseSignUp}>
+                  <Modal.Header closeButton>
+                    <Modal.Title></Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    {/* <Signup /> */}
+                    {/* <form className="w-75 mx-auto my-3" onSubmit={handleSignup}>
+                      <div style={{ textAlign: "center" }}>
+                        <h4>Create an account</h4>
+
+                        <p>
+                          Already have an account?{" "}
+                          <Link to="" onClick={handleShow}>
+                            Sign In
+                          </Link>
+                        </p>
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="email">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="emailsignup"
+                          name="email"
+                          
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                          class="form-control"
+                        />
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="password">
+                          Password
+                        </label>
+                        <input
+                          type="password"
+                          id="passwordsignup"
+                          name="password"
+                          
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                          }}
+                          class="form-control"
+                        />
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="firstname">
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          id="firstnamesignup"
+                          name="firstname"
+                          
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                          class="form-control"
+                        />
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="lastname">
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          id="lastnamesignup"
+                          name="lastname"
+                        
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                          class="form-control"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-block mb-4"
+                        >
+                          Sign up
+                        </button>
+                      </div>
+                    </form> */}
+                  </Modal.Body>
+                </Modal>
+                <Link to={"/cart"}>
+                  <button class="btn">
+                    {" "}
+                    Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                   </button>
-                </Modal.Footer>
-              </Modal>
-              <Link to={'/cart'}>
-              <button className="btn">
-                {" "}
-                Cart <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-              </button>
-              </Link>
+                </Link>
+              </div>
             </div>
-          </Container>
-        </Navbar>
-
-        {/* <Navbar bg="light" style={{borderBottom:'1px solid lightgrey'}} variant="light">
-          <div className='container-fluid'>
-            <Navbar.Brand style={{borderRight:'1px solid lightgrey', width:'8em'}} href="/movies">All Categories</Navbar.Brand>
-            <Nav className="me-auto">
-              <Link
-                to="/movies"
-                className="myLink mx-2 "
-                style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }}
-              >
-                ELECTRIONCS
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/favorites" className="mx-2 myLink">
-                MOBILE
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                MEN
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                WOMEN
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                HOME
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                BEAUTY & HEALTH
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                BABY & TOYS
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                SUPERMARKET
-              </Link>
-              <Link style={{ textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-                SELL ON NOON
-              </Link>
-              <Link style={{textDecoration: "none" ,color:'black', fontSize:13 ,fontWeight:'bold' , paddingRight:'.8em' }} to="/todo" className="mx-2 myLink">
-               <div style={{color:'red'}}>DEALS</div>
-              </Link>
-            </Nav>
           </div>
-        </Navbar> */}
+        </nav>
       </>
     </>
   );
