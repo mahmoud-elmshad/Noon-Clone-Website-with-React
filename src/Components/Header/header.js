@@ -9,6 +9,7 @@ import { useAuth } from "./../../Auth";
 import Login from "../Sign-in/Login";
 import UserService from "../../services/UserService";
 import Signup from "../Sign-up/Signup";
+import Search from "../Home/Search";
 
 const Header = () => {
   const { logOut, user, logIn, signUp, forgetPassword } = useAuth();
@@ -264,6 +265,7 @@ const Header = () => {
               </div>
 
               <div className="flex-grow-1 order-sm-2 order-3">
+                {/* <Search /> */}
                 <input
                   className="w-100"
                   type="search"
