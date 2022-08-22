@@ -15,22 +15,16 @@ function RatingReview(props) {
 
     // }
     useEffect(() => {
-        validateProps()
-    }, [props.rating])
-    function validateProps() {
-        if (props.rating && props.numberOfRating) {
+        if (props.rating && props.numberOfRating != undefined) {
             setValue((props.rating / props.numberOfRating))
         }
-        else {
-            setValue(0)
-        }
-    }
+    }, [props.rating])
 
     return (
         <StarRatings
             rating={value}
-            starRatedColor="#F2994A"
-            numberOfStars={5}
+            starRatedColor="black"
+            numberOfStars={3}
             // changeRating={changeRating}
             name='rating'
             starDimension='1.3vw'

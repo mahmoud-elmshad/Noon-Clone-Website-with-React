@@ -2,7 +2,6 @@ import React from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { useEffect } from "react";
-
 import Swal from "sweetalert2";
 import UserService from "../../services/UserService";
 import { useAuth } from "../../Auth";

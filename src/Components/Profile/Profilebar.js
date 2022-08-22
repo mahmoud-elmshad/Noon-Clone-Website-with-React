@@ -61,7 +61,7 @@ export default function Profilebar() {
     <>
       <div className="row d-flex flex-sm-row flex-column w-100">
         <div
-          className="col-sm-2 col-12 vh-100 d-flex flex-column"
+          className="col-sm-3 col-12 vh-100 d-flex flex-column"
           style={{ backgroundColor: "white" }}
         >
           <div className="ms-4 mt-5 fs-6">Hala {firstname}!</div>
@@ -113,7 +113,7 @@ export default function Profilebar() {
             Sign Out
           </Link> */}
         </div>
-        <div className="col-sm-10 col-12">
+        <div className="col-sm-9 col-12">
           <Outlet />
         </div>
       </div>
