@@ -29,7 +29,6 @@ const PayPalCheckOutButton = (props) => {
     const [error, setError] = useState(null);
     const handleApprove = (orderId) => {
         setPaidFor(true)
-
     }
 
 
