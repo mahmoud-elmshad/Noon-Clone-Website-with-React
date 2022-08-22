@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Information from "./Information";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import Location from "./Location";
 import { useAuth } from "./../../Auth";
@@ -10,7 +11,7 @@ import UserService from "../../services/UserService";
 import Signup from "../Sign-up/Signup";
 
 const Header = () => {
-  const { logOut, user, logIn, signUp } = useAuth();
+  const { logOut, user, logIn, signUp, forgetPassword } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -115,6 +116,32 @@ const Header = () => {
   }
 
   //  GoogleMap
+  const [formerror, setFormError] = useState({
+    useremailerror: "",
+    userpassworderror: "",
+  });
+  const [emailtouched, setEmailTouched] = useState(false);
+  const [passwordtouched, setPasswordTouched] = useState(false);
+
+  const [inputpassword, setInputPassword] = useState("password");
+  function togglepassword() {
+    if (inputpassword === "password") {
+      setInputPassword("text");
+      console.log(password);
+    } else if (inputpassword === "text") {
+      setInputPassword("password");
+    }
+  }
+
+  async function handlePasswordChange() {
+    await forgetPassword(email)
+      .then(() => {
+        console.log("success");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   return (
     <>
@@ -164,9 +191,25 @@ const Header = () => {
                       {address != null && address != "undefined,undefined" ? (
                         <>
                           {home ? (
-                            <div>{address}</div>
+                            <div
+                              style={{
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {address}
+                            </div>
                           ) : (
-                            <div>{addressaway}</div>
+                            <div
+                              style={{
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {addressaway}
+                            </div>
                           )}
                         </>
                       ) : null}
@@ -237,9 +280,11 @@ const Header = () => {
                 />
               </div>
               <div className="d-flex align-items-center order-sm-3 order-2">
-                <button className="btn">العربية</button>
+                {/* <button className="btn" style={{ border: "none" }}>
+                  العربية
+                </button>
 
-                <span>|</span>
+                <span>|</span> */}
                 {profilename ? (
                   <>
                     <div class="btn-group dropdown-center">
@@ -248,6 +293,7 @@ const Header = () => {
                         class="btn  dropdown-toggle"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        style={{ border: "none" }}
                       >
                         {profilename}
                       </button>
@@ -298,7 +344,11 @@ const Header = () => {
 
                 {!profilename || !user ? (
                   <>
-                    <button className="btn" onClick={handleShow}>
+                    <button
+                      className="btn"
+                      onClick={handleShow}
+                      style={{ border: "none" }}
+                    >
                       sign in<i className="fa fa-user-o" aria-hidden="true"></i>
                     </button>
                   </>
@@ -335,40 +385,103 @@ const Header = () => {
                             type="email"
                             id="emaillogin"
                             name="email"
-                            // value={email}
+                            value={email}
+                            onBlur={() => setEmailTouched(true)}
                             onChange={(e) => {
                               setEmail(e.target.value);
+                              let regex = new RegExp(
+                                "^[a-zA-Z0-9]+@([a-zA-Z]{3,}).([A-Za-z]{2,3})$"
+                              );
+
+                              setFormError({
+                                ...formerror,
+                                useremailerror:
+                                  e.target.value.length == 0
+                                    ? "Required"
+                                    : !regex.test(e.target.value)
+                                    ? "Example 'test@test.com'"
+                                    : null,
+                              });
+                              console.log(formerror.useremailerror);
                             }}
-                            class="form-control"
+                            className={`form-control ${
+                              formerror.useremailerror && emailtouched
+                                ? "is-invalid shadow-none"
+                                : ""
+                            }`}
                           />
+                          {emailtouched ? (
+                            <small className="text-danger">
+                              {formerror.useremailerror}
+                            </small>
+                          ) : (
+                            <></>
+                          )}
                         </div>
 
                         <div class="form-outline mb-4">
                           <label class="form-label" for="password">
                             Password
                           </label>
-                          <input
-                            type="password"
-                            id="passwordlogin"
-                            name="password"
-                            // value={password}
-                            onChange={(e) => {
-                              setPassword(e.target.value);
-                            }}
-                            class="form-control"
-                          />
+                          <div className=" input-group">
+                            <input
+                              type={inputpassword}
+                              id="password"
+                              name="password"
+                              value={password}
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                                setFormError({
+                                  ...formerror,
+                                  userpassworderror:
+                                    e.target.value.length == 0
+                                      ? "Required"
+                                      : e.target.value.length < 8
+                                      ? "Password canot be less than 8 characters"
+                                      : null,
+                                });
+                                console.log(formerror.userpassworderror);
+                              }}
+                              onBlur={() => setPasswordTouched(true)}
+                              className={`form-control ${
+                                formerror.userpassworderror && passwordtouched
+                                  ? "is-invalid shadow-none"
+                                  : ""
+                              }`}
+                            />
+                            <div className="input-group-text">
+                              {inputpassword === "password" ? (
+                                <AiFillEyeInvisible onClick={togglepassword} />
+                              ) : (
+                                <AiFillEye onClick={togglepassword} />
+                              )}
+                            </div>
+                          </div>
+                          {passwordtouched ? (
+                            <small className="text-danger">
+                              {formerror.userpassworderror}
+                            </small>
+                          ) : (
+                            <></>
+                          )}
                         </div>
                         <div>
                           <button
                             type="submit"
                             class="btn btn-primary btn-block mb-4"
+                            disabled={
+                              formerror.useremailerror != null ||
+                              formerror.userpassworderror != null
+                            }
                           >
                             Sign in
                           </button>
                         </div>
 
                         <div class="col">
-                          <a href="#!">Forgot your password?</a>
+                          <a href="#!" onClick={handlePasswordChange}>
+                            Forgot your password?
+                          </a>
                         </div>
                       </form>
                     </div>
@@ -467,7 +580,7 @@ const Header = () => {
                   </Modal.Body>
                 </Modal>
                 <Link to={"/cart"}>
-                  <button class="btn">
+                  <button class="btn" style={{ border: "none" }}>
                     {" "}
                     Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                   </button>

@@ -59,13 +59,13 @@ export default function Profilebar() {
   };
   return (
     <>
-      <div className="row w-100">
+      <div className="row d-flex flex-sm-row flex-column w-100">
         <div
-          className="col-2 vh-100 d-flex flex-column"
+          className="col-sm-2 col-12 vh-100 d-flex flex-column"
           style={{ backgroundColor: "white" }}
         >
-          <div className="ms-4 mt-5 fs-6">Hala {firstname}</div>
-          <div className="ms-4">{email}</div>
+          <div className="ms-4 mt-5 fs-6">Hala {firstname}!</div>
+          {/* <div className="ms-4">{email}</div> */}
           <hr className="ms-4" />
 
           <Link
@@ -113,7 +113,7 @@ export default function Profilebar() {
             Sign Out
           </Link> */}
         </div>
-        <div className="col-10">
+        <div className="col-sm-10 col-12">
           <Outlet />
         </div>
       </div>

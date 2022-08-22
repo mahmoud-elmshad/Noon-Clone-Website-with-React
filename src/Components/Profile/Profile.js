@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 import { useAuth } from "./../../Auth";
+import { async } from "@firebase/util";
 
 export default function Profile() {
-  const { logOut, user, logIn, signUp } = useAuth();
+  const { logOut, user, logIn, signUp, forgetPassword } = useAuth();
 
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
@@ -12,6 +13,9 @@ export default function Profile() {
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
   const [mobile, setMobile] = useState("");
+  const [newfirstname, setNewFirstName] = useState("");
+
+  const [newlastname, setNewLastName] = useState("");
   useEffect(() => {
     userData();
     console.log(user);
@@ -24,6 +28,8 @@ export default function Profile() {
       console.log(docSnap.data());
       setFirstName(docSnap.data().firstname);
       setLastName(docSnap.data().lastname);
+      setNewFirstName(docSnap.data().firstname);
+      setNewLastName(docSnap.data().lastname);
       setPassword(docSnap.data().password);
       console.log(password);
       console.log(lastname);
@@ -37,8 +43,8 @@ export default function Profile() {
     console.log(user.id);
     await UserService.updateUser(
       `${user.uid}`,
-      firstname,
-      lastname,
+      newfirstname,
+      newlastname,
       city,
       street,
       mobile
@@ -47,17 +53,30 @@ export default function Profile() {
   function handleEdit() {
     editInfo();
   }
+  async function handlePasswordChange() {
+    await forgetPassword(email)
+      .then((data) => {
+        console.log("success");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
+
   return (
     <>
-      <div>
-        <div className="fs-3 ms-5">Profile</div>
+      <div className="mt-5">
+        <div className="fs-3 ms-5 fw-bold">Profile</div>
         <div className="ms-5">
           Manage your details, view your tier status and change your password
         </div>
         <div className="mt-5">
           <div className="fs-5 ms-5 my-3">General Info</div>
           <div className="d-flex">
-            <div class="form-outline mb-2 mx-5">
+            <div
+              class="form-outline mb-2 mx-5"
+              style={{ maxWidth: "300px", minWidth: "300px" }}
+            >
               <label class="form-label" for="firstname">
                 First Name
               </label>
@@ -65,15 +84,18 @@ export default function Profile() {
                 type="text"
                 id="firstname"
                 name="firstname"
-                value={firstname}
+                value={newfirstname}
                 class="form-control"
                 onChange={(e) => {
-                  setFirstName(e.target.value);
+                  setNewFirstName(e.target.value);
                 }}
               />
             </div>
 
-            <div class="form-outline mb-4">
+            <div
+              class="form-outline mb-4"
+              style={{ maxWidth: "300px", minWidth: "300px" }}
+            >
               <label class="form-label" for="lastname">
                 Last Name
               </label>
@@ -81,24 +103,31 @@ export default function Profile() {
                 type="text"
                 id="lastname"
                 name="lastname"
-                value={lastname}
+                value={newlastname}
                 class="form-control"
                 onChange={(e) => {
-                  setLastName(e.target.value);
+                  setNewLastName(e.target.value);
                 }}
               />
             </div>
           </div>
         </div>
         <div className="mx-5">
-          <button className="btn btn-primary " onClick={handleEdit}>
+          <button
+            className="btn btn-primary "
+            onClick={handleEdit}
+            disabled={newfirstname == firstname && newlastname == lastname}
+          >
             EDIT
           </button>
         </div>
         <div className="mt-5">
           <div className="fs-5 mx-5 my-3">General Info</div>
           <div className="d-flex ">
-            <div class="form-outline mb-2 mx-5 w-25">
+            <div
+              class="form-outline mb-2 mx-5 w-25"
+              style={{ maxWidth: "300px", minWidth: "300px" }}
+            >
               <label class="form-label" for="firstname">
                 Email
               </label>
@@ -111,7 +140,10 @@ export default function Profile() {
               />
             </div>
 
-            <div class="form-outline mb-4">
+            <div
+              class="form-outline mb-4"
+              style={{ maxWidth: "300px", minWidth: "300px" }}
+            >
               <label class="form-label" for="lastname">
                 Password
               </label>
@@ -125,9 +157,11 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        {/* <div className="ms-5">
-          <button className="btn btn-primary ">CHANGE PASSWORD</button>
-        </div> */}
+        <div className="ms-5">
+          <button className="btn btn-primary " onClick={handlePasswordChange}>
+            CHANGE PASSWORD
+          </button>
+        </div>
       </div>
     </>
   );

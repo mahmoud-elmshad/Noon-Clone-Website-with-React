@@ -36,14 +36,14 @@ export default function Address() {
   return (
     <>
       <div>
-        <div className="fs-3 mx-5">Addresses</div>
+        <div className="fs-3 fw-bold mx-5 mt-5">Addresses</div>
         <div className="mx-5">
           Manage your saved addresses for fast and easy checkout across our
           marketplaces
         </div>
         <div className="fs-3 mx-5 my-5">Default address</div>
         <div className="row mx-5 rounded" style={{ backgroundColor: "white" }}>
-          <div className="col-1 fs-6 pt-3">
+          <div className="col-sm-1 col-3 fs-6 pt-3">
             <div>Name</div>
             <br />
             <div>Address</div>
@@ -51,7 +51,7 @@ export default function Address() {
             <div>Phone</div>
             <br />
           </div>
-          <div className="col-10 fs-6 pt-3">
+          <div className="col-sm-10 col-9 fs-6 pt-3">
             <div>
               {firstname} {lastname}
             </div>
