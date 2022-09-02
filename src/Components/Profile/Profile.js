@@ -61,6 +61,7 @@ export default function Profile() {
       .catch((error) => {
         alert(error);
       });
+    // window.location.reload();
   }
 
   return (

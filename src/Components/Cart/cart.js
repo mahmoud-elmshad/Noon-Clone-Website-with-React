@@ -60,6 +60,12 @@ export default function Cart() {
   //   description: 'Noon Shopping',
   //   price: ((totalPrice / 19.14).toFixed(1))
   // }
+  const [apply, setApply] = useState("");
+  function handleApply() {
+    if (apply == "noon50") {
+      console.log("noon50");
+    }
+  }
 
   return (
     <>
@@ -109,12 +115,17 @@ export default function Cart() {
                   className="form-control"
                   placeholder="Coupon Code"
                   aria-describedby="addon-wrapping"
+                  onChange={(e) => {
+                    setApply(e.target.value);
+                  }}
                 />
                 {/* <span className="input-group-text" id="addon-wrapping">
               @
             </span> */}
 
-                <button className="btn btn-primary">Apply</button>
+                <button className="btn btn-primary" onClick={handleApply}>
+                  Apply
+                </button>
               </div>
               <div className="d-flex justify-content-between">
                 <div>Subtotal</div>
